@@ -1,0 +1,117 @@
+table Conversations
+	lineageTag: 00000000-0000-0000-0000-000000000001
+
+	measure 'Total Conversas' = COUNTROWS(Conversations)
+		formatString: #,##0
+		displayFolder: 01 Retencao IA
+		lineageTag: 00000000-0000-0000-0000-000000000014
+
+	measure 'Conversas Resolvidas IA' = CALCULATE(COUNTROWS(Conversations), Conversations[outcome] = "resolved_by_ai")
+		formatString: #,##0
+		displayFolder: 01 Retencao IA
+		lineageTag: 00000000-0000-0000-0000-000000000015
+
+	measure 'Retencao IA (%)' = DIVIDE([Conversas Resolvidas IA], [Total Conversas])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 01 Retencao IA
+		lineageTag: 00000000-0000-0000-0000-000000000016
+
+	column conversationId
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000002
+		summarizeBy: none
+		sourceColumn: conversationId
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp
+		dataType: dateTime
+		lineageTag: 00000000-0000-0000-0000-000000000003
+		summarizeBy: none
+		sourceColumn: timestamp
+
+		variation Variation
+			isDefault
+			relationship: aa4d07e6-7af6-450b-a61a-939b15ce9649
+			defaultHierarchy: LocalDateTable_e19e2f56-a1b4-4db9-9955-e37492d5b00b.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column sessionId
+		dataType: string
+		isHidden
+		lineageTag: 00000000-0000-0000-0000-000000000004
+		summarizeBy: none
+		sourceColumn: sessionId
+
+		annotation SummarizationSetBy = Automatic
+
+	column channel
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000005
+		summarizeBy: none
+		sourceColumn: channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column customerIdAnon
+		dataType: string
+		isHidden
+		lineageTag: 00000000-0000-0000-0000-000000000006
+		summarizeBy: none
+		sourceColumn: customerIdAnon
+
+		annotation SummarizationSetBy = Automatic
+
+	column customerSegment
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000007
+		summarizeBy: none
+		sourceColumn: customerSegment
+
+		annotation SummarizationSetBy = Automatic
+
+	column initialIntent
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000008
+		summarizeBy: none
+		sourceColumn: initialIntent
+
+		annotation SummarizationSetBy = Automatic
+
+	column originQueue
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000009
+		summarizeBy: none
+		sourceColumn: originQueue
+
+		annotation SummarizationSetBy = Automatic
+
+	column outcome
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000010
+		summarizeBy: none
+		sourceColumn: outcome
+
+		annotation SummarizationSetBy = Automatic
+
+	column durationSeconds
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000011
+		summarizeBy: sum
+		sourceColumn: durationSeconds
+
+		annotation SummarizationSetBy = Automatic
+
+	column totalTurns
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000012
+		summarizeBy: sum
+		sourceColumn: totalTurns
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Conversations = m
+		mode: import
+		source = let Source = Csv.Document(File.Contents("E:\Personal\08_Projects-Code-Repos\talk-sense\docs\sample-data\output\conversations.csv"), [Delimiter=",", Columns=11, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"conversationId", type text}, {"timestamp", type datetime}, {"sessionId", type text}, {"channel", type text}, {"customerIdAnon", type text}, {"customerSegment", type text}, {"initialIntent", type text}, {"originQueue", type text}, {"outcome", type text}, {"durationSeconds", Int64.Type}, {"totalTurns", Int64.Type}}) in #"Changed Type"
+

@@ -1,0 +1,96 @@
+table DimDate
+	lineageTag: 00000000-0000-0000-0000-000000000062
+
+	column dataKey
+		dataType: int64
+		isHidden
+		lineageTag: 00000000-0000-0000-0000-000000000063
+		summarizeBy: count
+		sourceColumn: dataKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column data
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 00000000-0000-0000-0000-000000000064
+		summarizeBy: none
+		sourceColumn: data
+
+		variation Variation
+			isDefault
+			relationship: aa0e2afc-e325-4648-98aa-91c034d14721
+			defaultHierarchy: LocalDateTable_42765091-f17a-44c4-b096-d6022186acef.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ano
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000065
+		summarizeBy: sum
+		sourceColumn: ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000066
+		summarizeBy: sum
+		sourceColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_mes
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000067
+		summarizeBy: none
+		sourceColumn: nome_mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000068
+		summarizeBy: sum
+		sourceColumn: dia
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia_semana
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000069
+		summarizeBy: sum
+		sourceColumn: dia_semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column nome_dia_semana
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000070
+		summarizeBy: none
+		sourceColumn: nome_dia_semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column semana_ano
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000071
+		summarizeBy: sum
+		sourceColumn: semana_ano
+
+		annotation SummarizationSetBy = Automatic
+
+	column fim_de_semana
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000072
+		summarizeBy: sum
+		sourceColumn: fim_de_semana
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDate = m
+		mode: import
+		source = let Source = Csv.Document(File.Contents("E:\Personal\08_Projects-Code-Repos\talk-sense\docs\sample-data\output\dim_data.csv"), [Delimiter=",", Columns=10, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"dataKey", Int64.Type}, {"data", type date}, {"ano", Int64.Type}, {"mes", Int64.Type}, {"nome_mes", type text}, {"dia", Int64.Type}, {"dia_semana", Int64.Type}, {"nome_dia_semana", type text}, {"semana_ano", Int64.Type}, {"fim_de_semana", Int64.Type}}) in #"Changed Type"
+

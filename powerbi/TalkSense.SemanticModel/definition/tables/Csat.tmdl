@@ -1,0 +1,86 @@
+table Csat
+	lineageTag: 00000000-0000-0000-0000-000000000050
+
+	measure 'Total Respostas CSAT' = COUNTROWS(Csat)
+		formatString: #,##0
+		displayFolder: 09 CSAT
+		lineageTag: 00000000-0000-0000-0000-000000000057
+
+	measure 'CSAT Medio' = AVERAGE(Csat[score])
+		formatString: 0.00
+		displayFolder: 09 CSAT
+		lineageTag: 00000000-0000-0000-0000-000000000058
+
+	measure 'CSAT Promotores' = CALCULATE(COUNTROWS(Csat), Csat[score] >= 4)
+		formatString: #,##0
+		displayFolder: 09 CSAT
+		lineageTag: 00000000-0000-0000-0000-000000000059
+
+	measure 'CSAT Detratores' = CALCULATE(COUNTROWS(Csat), Csat[score] <= 2)
+		formatString: #,##0
+		displayFolder: 09 CSAT
+		lineageTag: 00000000-0000-0000-0000-000000000060
+
+	measure NPS = DIVIDE([CSAT Promotores], [Total Respostas CSAT]) - DIVIDE([CSAT Detratores], [Total Respostas CSAT])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 09 CSAT
+		lineageTag: 00000000-0000-0000-0000-000000000061
+
+	column conversationId
+		dataType: string
+		isHidden
+		lineageTag: 00000000-0000-0000-0000-000000000051
+		summarizeBy: none
+		sourceColumn: conversationId
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp
+		dataType: dateTime
+		lineageTag: 00000000-0000-0000-0000-000000000052
+		summarizeBy: none
+		sourceColumn: timestamp
+
+		variation Variation
+			isDefault
+			relationship: 7c7332ac-a4f0-4e56-8c71-d42fd48a5018
+			defaultHierarchy: LocalDateTable_14e4a1eb-886a-44f8-8693-b6b5b8e149e5.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column score
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000053
+		summarizeBy: sum
+		sourceColumn: score
+
+		annotation SummarizationSetBy = Automatic
+
+	column scale
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000054
+		summarizeBy: none
+		sourceColumn: scale
+
+		annotation SummarizationSetBy = Automatic
+
+	column comment
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000055
+		summarizeBy: none
+		sourceColumn: comment
+
+		annotation SummarizationSetBy = Automatic
+
+	column collectedVia
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000056
+		summarizeBy: none
+		sourceColumn: collectedVia
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Csat = m
+		mode: import
+		source = let Source = Csv.Document(File.Contents("E:\Personal\08_Projects-Code-Repos\talk-sense\docs\sample-data\output\csat.csv"), [Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"conversationId", type text}, {"timestamp", type datetime}, {"score", Int64.Type}, {"scale", type text}, {"comment", type text}, {"collectedVia", type text}}) in #"Changed Type"
+

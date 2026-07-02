@@ -1,0 +1,93 @@
+table Events
+	lineageTag: 00000000-0000-0000-0000-000000000036
+
+	measure 'Eventos Nao Compreensao' = CALCULATE(COUNTROWS(Events), Events[eventName] IN {"no_comprehension", "knowledge_gap"})
+		formatString: #,##0
+		displayFolder: 05 Transbordo
+		lineageTag: 00000000-0000-0000-0000-000000000042
+
+	measure 'Transbordo Nao Compreensao (%)' = DIVIDE([Eventos Nao Compreensao], [Total Conversas])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 05 Transbordo
+		lineageTag: 00000000-0000-0000-0000-000000000043
+
+	measure 'Eventos Retorno URA' = CALCULATE(COUNTROWS(Events), Events[eventName] = "returned_to_ura")
+		formatString: #,##0
+		displayFolder: 06 Retorno URA
+		lineageTag: 00000000-0000-0000-0000-000000000044
+
+	measure 'Retorno URA (%)' = DIVIDE([Eventos Retorno URA], [Total Conversas])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 06 Retorno URA
+		lineageTag: 00000000-0000-0000-0000-000000000045
+
+	measure 'Eventos Pedido Atendente' = CALCULATE(COUNTROWS(Events), Events[eventName] = "agent_requested")
+		formatString: #,##0
+		displayFolder: 07 Pedido Atendente
+		lineageTag: 00000000-0000-0000-0000-000000000046
+
+	measure 'Pedido Atendente (%)' = DIVIDE([Eventos Pedido Atendente], [Total Conversas])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 07 Pedido Atendente
+		lineageTag: 00000000-0000-0000-0000-000000000047
+
+	measure 'Eventos Erro Sistema' = CALCULATE(COUNTROWS(Events), Events[eventName] = "system_error")
+		formatString: #,##0
+		displayFolder: 08 Erros
+		lineageTag: 00000000-0000-0000-0000-000000000048
+
+	measure 'Taxa de Erro (%)' = DIVIDE([Eventos Erro Sistema], [Total Conversas])
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 08 Erros
+		lineageTag: 00000000-0000-0000-0000-000000000049
+
+	column conversationId
+		dataType: string
+		isHidden
+		lineageTag: 00000000-0000-0000-0000-000000000037
+		summarizeBy: none
+		sourceColumn: conversationId
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp
+		dataType: dateTime
+		lineageTag: 00000000-0000-0000-0000-000000000038
+		summarizeBy: none
+		sourceColumn: timestamp
+
+		variation Variation
+			isDefault
+			relationship: 899903f7-9245-4d7b-9086-626b890b241e
+			defaultHierarchy: LocalDateTable_e055f68b-eea3-4f72-b955-4a87aafa9fc0.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column eventName
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000039
+		summarizeBy: none
+		sourceColumn: eventName
+
+		annotation SummarizationSetBy = Automatic
+
+	column eventCategory
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000040
+		summarizeBy: none
+		sourceColumn: eventCategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column turnIndex
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000041
+		summarizeBy: sum
+		sourceColumn: turnIndex
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Events = m
+		mode: import
+		source = let Source = Csv.Document(File.Contents("E:\Personal\08_Projects-Code-Repos\talk-sense\docs\sample-data\output\events.csv"), [Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"conversationId", type text}, {"timestamp", type datetime}, {"eventName", type text}, {"eventCategory", type text}, {"turnIndex", Int64.Type}}) in #"Changed Type"
+

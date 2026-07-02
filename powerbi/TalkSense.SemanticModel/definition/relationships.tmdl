@@ -1,0 +1,37 @@
+relationship 00000000-0000-0000-0000-000000000073
+	fromColumn: Turns.conversationId
+	toColumn: Conversations.conversationId
+
+relationship 00000000-0000-0000-0000-000000000074
+	fromColumn: Events.conversationId
+	toColumn: Conversations.conversationId
+
+relationship 00000000-0000-0000-0000-000000000075
+	fromColumn: Csat.conversationId
+	toColumn: Conversations.conversationId
+
+relationship aa4d07e6-7af6-450b-a61a-939b15ce9649
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Conversations.timestamp
+	toColumn: LocalDateTable_e19e2f56-a1b4-4db9-9955-e37492d5b00b.Date
+
+relationship 4ded2ff3-e2cb-499e-af39-9cc5f5848d8f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Turns.timestamp
+	toColumn: LocalDateTable_21f95e7a-c8ae-453b-8c5d-5571d2c9ff78.Date
+
+relationship 899903f7-9245-4d7b-9086-626b890b241e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Events.timestamp
+	toColumn: LocalDateTable_e055f68b-eea3-4f72-b955-4a87aafa9fc0.Date
+
+relationship 7c7332ac-a4f0-4e56-8c71-d42fd48a5018
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Csat.timestamp
+	toColumn: LocalDateTable_14e4a1eb-886a-44f8-8693-b6b5b8e149e5.Date
+
+relationship aa0e2afc-e325-4648-98aa-91c034d14721
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimDate.data
+	toColumn: LocalDateTable_42765091-f17a-44c4-b096-d6022186acef.Date
+

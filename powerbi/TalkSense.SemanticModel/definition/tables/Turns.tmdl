@@ -1,0 +1,139 @@
+table Turns
+	lineageTag: 00000000-0000-0000-0000-000000000017
+
+	measure 'TMR (ms)' = AVERAGE(Turns[latencyMs])
+		formatString: #,##0
+		displayFolder: 02 TMR
+		lineageTag: 00000000-0000-0000-0000-000000000030
+
+	measure 'TMR (segundos)' = DIVIDE([TMR (ms)], 1000)
+		formatString: 0.00
+		displayFolder: 02 TMR
+		lineageTag: 00000000-0000-0000-0000-000000000031
+
+	measure 'TMA (ms)' = MAX(Turns[latencyMs])
+		formatString: #,##0
+		displayFolder: 03 TMA
+		lineageTag: 00000000-0000-0000-0000-000000000032
+
+	measure 'TMA (segundos)' = DIVIDE([TMA (ms)], 1000)
+		formatString: 0.00
+		displayFolder: 03 TMA
+		lineageTag: 00000000-0000-0000-0000-000000000033
+
+	measure 'Acionamentos por Intent' = COUNTROWS(Turns)
+		formatString: #,##0
+		displayFolder: 04 Top Intents
+		lineageTag: 00000000-0000-0000-0000-000000000034
+
+	measure 'Rank Intent' = RANKX(ALL(Turns[intent]), [Acionamentos por Intent], , DESC, Dense)
+		formatString: #,##0
+		displayFolder: 04 Top Intents
+		lineageTag: 00000000-0000-0000-0000-000000000035
+
+	column conversationId
+		dataType: string
+		isHidden
+		lineageTag: 00000000-0000-0000-0000-000000000018
+		summarizeBy: none
+		sourceColumn: conversationId
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp
+		dataType: dateTime
+		lineageTag: 00000000-0000-0000-0000-000000000019
+		summarizeBy: none
+		sourceColumn: timestamp
+
+		variation Variation
+			isDefault
+			relationship: 4ded2ff3-e2cb-499e-af39-9cc5f5848d8f
+			defaultHierarchy: LocalDateTable_21f95e7a-c8ae-453b-8c5d-5571d2c9ff78.'Hierarquia de datas'
+
+		annotation SummarizationSetBy = Automatic
+
+	column turnIndex
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000020
+		summarizeBy: sum
+		sourceColumn: turnIndex
+
+		annotation SummarizationSetBy = Automatic
+
+	column userUtterance
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000021
+		summarizeBy: none
+		sourceColumn: userUtterance
+
+		annotation SummarizationSetBy = Automatic
+
+	column agentResponse
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000022
+		summarizeBy: none
+		sourceColumn: agentResponse
+
+		annotation SummarizationSetBy = Automatic
+
+	column intent
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000023
+		summarizeBy: none
+		sourceColumn: intent
+
+		annotation SummarizationSetBy = Automatic
+
+	column intentConfidence
+		dataType: double
+		lineageTag: 00000000-0000-0000-0000-000000000024
+		summarizeBy: sum
+		sourceColumn: intentConfidence
+
+		annotation SummarizationSetBy = Automatic
+
+	column sentimentOverall
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000025
+		summarizeBy: none
+		sourceColumn: sentimentOverall
+
+		annotation SummarizationSetBy = Automatic
+
+	column sentimentScore
+		dataType: double
+		lineageTag: 00000000-0000-0000-0000-000000000026
+		summarizeBy: sum
+		sourceColumn: sentimentScore
+
+		annotation SummarizationSetBy = Automatic
+
+	column latencyMs
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000027
+		summarizeBy: sum
+		sourceColumn: latencyMs
+
+		annotation SummarizationSetBy = Automatic
+
+	column ttsEnabled
+		dataType: boolean
+		lineageTag: 00000000-0000-0000-0000-000000000028
+		summarizeBy: none
+		sourceColumn: ttsEnabled
+
+		annotation SummarizationSetBy = Automatic
+
+	column bargeInDetected
+		dataType: boolean
+		lineageTag: 00000000-0000-0000-0000-000000000029
+		summarizeBy: none
+		sourceColumn: bargeInDetected
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Turns = m
+		mode: import
+		source = let Source = Csv.Document(File.Contents("E:\Personal\08_Projects-Code-Repos\talk-sense\docs\sample-data\output\turns.csv"), [Delimiter=",", Columns=12, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"conversationId", type text}, {"timestamp", type datetime}, {"turnIndex", Int64.Type}, {"userUtterance", type text}, {"agentResponse", type text}, {"intent", type text}, {"intentConfidence", type number}, {"sentimentOverall", type text}, {"sentimentScore", type number}, {"latencyMs", Int64.Type}, {"ttsEnabled", type logical}, {"bargeInDetected", type logical}}) in #"Changed Type"
+

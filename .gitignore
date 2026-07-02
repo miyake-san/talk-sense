@@ -216,3 +216,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Power BI Desktop local cache/editor state (not part of the shareable PBIP definition)
+powerbi/**/.pbi/
+*.abf
+
