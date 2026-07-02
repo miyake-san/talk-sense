@@ -8,9 +8,12 @@ Projeto Power BI Desktop no formato **PBIP + TMDL** (Power BI Project), version�
 powerbi/
 ├── TalkSense.pbip                  # Arquivo raiz — abra este no Power BI Desktop
 ├── TalkSense.Report/                # Definição do relatório (PBIR)
-│   └── definition/pages/overview/   # Página "Overview" com 4 cards KPI
+│   └── definition/pages/overview/   # Página "Overview" (canvas em branco — veja "Adicionando os cards KPI" abaixo)
 └── TalkSense.SemanticModel/         # Modelo semântico (TMDL)
-    └── definition/model.tmdl        # Tabelas, colunas, relacionamentos e medidas DAX
+    └── definition/
+        ├── model.tmdl                # Metadados do modelo, cultura, referências às tabelas
+        ├── relationships.tmdl        # Relacionamentos entre tabelas
+        └── tables/                   # Um arquivo .tmdl por tabela (colunas, medidas, partição M)
 ```
 
 ## Modelo de dados
@@ -23,7 +26,7 @@ powerbi/
 | `Csat` | Fato — 1 linha por resposta de pesquisa CSAT | `docs/sample-data/output/csat.csv` |
 | `DimDate` | Dimensão calendário | `docs/sample-data/output/dim_data.csv` |
 
-Relacionamentos: `Conversations (1) → Turns/Events/Csat (*)` via `conversationId`, e `DimDate (1) → Conversations (*)` via uma coluna calculada `DateKey` (derivada de `timestamp`).
+Relacionamentos: `Conversations (1) → Turns/Events/Csat (*)` via `conversationId`. A tabela `DimDate` está carregada como referência de calendário autônoma (sem relacionamento explícito) — uma coluna calculada `DateKey` + relacionamento para `DimDate` foi removida por causar erro de "cyclic reference" no Power BI Desktop; use os hidden auto date tables do próprio Power BI (Auto Date/Time) para segmentação temporal, ou relacione `DimDate` manualmente pela UI se precisar de uma dimensão de calendário explícita.
 
 ## As 9 métricas (medidas DAX)
 
@@ -49,6 +52,36 @@ Todas as medidas e fórmulas DAX completas estão documentadas em [`../infra/doc
    - Vá em **Transformar Dados** → selecione a query de cada tabela → edite o passo **Source** e substitua `<ABSOLUTE_PATH_TO_REPO>` pelo caminho absoluto local do repositório (ex.: `C:\Users\voce\talk-sense`).
    - Gere os CSVs antes, se necessário: `python docs/sample-data/gerar_dados_sinteticos_talksense.py --conversas 1000 --dias 30`.
 4. Clique em **Atualizar** para carregar os dados.
+
+## Adicionando os cards KPI na página Overview
+
+A página "Overview" é entregue **em branco de propósito**. Tentativas de versionar os 4 visuals de KPI diretamente como arquivos PBIR (`visual.json`) causaram um crash reproduzível no Power BI Desktop (`Cannot read properties of undefined (reading 'visualContainers')` em `DesktopExplorationComponent.onExplorationActivated`), mesmo com JSON validado contra o schema oficial. A causa raiz é uma incompatibilidade do parser de PBIR desta build do Desktop com visuals autorados manualmente — não um defeito no modelo. O caminho confiável é adicionar os cards pela interface:
+
+1. Abra `powerbi/TalkSense.pbip` no Power BI Desktop e confirme que a página **Overview** está selecionada (canvas em branco).
+2. Na faixa **Inserir**, clique em **Visual** → escolha **Cartão** (Card) — repita este passo uma vez para cada uma das 4 métricas abaixo.
+3. Com o cartão selecionado, no painel **Dados** (lado direito), localize a tabela e arraste a medida para o campo **Valores** do cartão:
+
+   | Cartão | Tabela | Medida |
+   |---|---|---|
+   | Retenção IA | `Conversations` | `Retencao IA (%)` |
+   | TMR | `Turns` | `TMR (segundos)` |
+   | CSAT | `Csat` | `CSAT Medio` |
+   | Erros do Sistema | `Events` | `Taxa de Erro (%)` |
+
+4. (Opcional) No painel **Formatar visual**, ajuste o rótulo de categoria (**Categoria label** → texto customizado) para exibir o nome amigável da métrica (ex.: "Retenção IA (%)") acima do valor.
+5. Redimensione/posicione os 4 cartões lado a lado (arraste pelas alças do visual) e salve (**Ctrl+S**).
+6. Faça commit do PBIP atualizado — o Power BI Desktop vai reescrever `TalkSense.Report/definition/pages/overview/` com o formato PBIR nativo dele, que é seguro para versionar (foi o próprio Desktop que gerou, não um autor manual).
+
+Após salvar pela UI uma vez, o arquivo `visual.json` gerado pelo Desktop pode servir de referência/modelo caso você queira replicar o padrão para novas páginas — mas continue preferindo a UI para criar visuals novos, dado o bug de renderização observado.
+
+### Criando páginas de relatório adicionais
+
+Para adicionar novas páginas (ex.: "Turns", "Eventos", "CSAT" detalhados):
+
+1. Clique no **+** ao lado das abas de página, na parte inferior do canvas.
+2. Renomeie a página (duplo clique na aba) seguindo o padrão em minúsculas usado internamente (ex. `turns-detail`) — o nome de exibição pode ser diferente e mais amigável (ex. "Turnos").
+3. Adicione visuals normalmente pela UI (gráficos de coluna/linha para `Acionamentos por Intent`/`Rank Intent`, tabela para detalhamento de `Turns`, etc.).
+4. Salve e comite — assim como a página Overview, o Power BI Desktop gerencia a estrutura PBIR automaticamente.
 
 ## Migrando para produção (Direct Lake / DirectQuery no Eventhouse)
 
