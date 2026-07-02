@@ -89,15 +89,6 @@ table Conversations
 		sourceColumn: totalTurns
 		annotation SummarizationSetBy = Automatic
 
-	column DateKey
-		dataType: int64
-		isHidden
-		lineageTag: 00000000-0000-0000-0000-000000000013
-		summarizeBy: none
-		type: calculated
-		expression: INT(FORMAT('Conversations'[timestamp], "YYYYMMDD"))
-		annotation SummarizationSetBy = Automatic
-
 	measure 'Total Conversas' = COUNTROWS(Conversations)
 		formatString: #,##0
 		lineageTag: 00000000-0000-0000-0000-000000000014
@@ -487,7 +478,4 @@ relationship 00000000-0000-0000-0000-000000000075
 	fromColumn: Csat.conversationId
 	toColumn: Conversations.conversationId
 
-relationship 00000000-0000-0000-0000-000000000076
-	fromColumn: Conversations.DateKey
-	toColumn: DimDate.dataKey
 
