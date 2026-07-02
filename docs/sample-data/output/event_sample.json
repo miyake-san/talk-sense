@@ -1,0 +1,17 @@
+{
+  "eventType": "conversation_started",
+  "timestamp": "2026-06-22T21:02:40.309Z",
+  "conversationId": "conv-20260622-000001",
+  "payload": {
+    "sessionId": "sess-ce133c04f8babfbc",
+    "channel": "phone",
+    "customerIdAnon": "1a9f6dde02122a04",
+    "customerSegment": "Premium",
+    "initialIntent": "sinistro",
+    "originQueue": "seguros",
+    "metadata": {
+      "region": "BR-SP",
+      "languageCode": "pt-BR"
+    }
+  }
+}
