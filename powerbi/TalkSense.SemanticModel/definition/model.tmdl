@@ -115,7 +115,7 @@ table Conversations
 
 	partition Conversations = m
 		mode: import
-		source = let Source = Csv.Document(File.Contents("<ABSOLUTE_PATH_TO_REPO>\docs\sample-data\output\conversations.csv"), [Delimiter=",", Columns=11, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"conversationId", type text}, {"timestamp", type datetime}, {"sessionId", type text}, {"channel", type text}, {"customerIdAnon", type text}, {"customerSegment", type text}, {"initialIntent", type text}, {"originQueue", type text}, {"outcome", type text}, {"durationSeconds", Int64.Type}, {"totalTurns", Int64.Type}}) in #"Changed Type"
+		source = let Source = Csv.Document(File.Contents("E:\Personal\08_Projects-Code-Repos\talk-sense\docs\sample-data\output\conversations.csv"), [Delimiter=",", Columns=11, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"conversationId", type text}, {"timestamp", type datetime}, {"sessionId", type text}, {"channel", type text}, {"customerIdAnon", type text}, {"customerSegment", type text}, {"initialIntent", type text}, {"originQueue", type text}, {"outcome", type text}, {"durationSeconds", Int64.Type}, {"totalTurns", Int64.Type}}) in #"Changed Type"
 
 table Turns
 	lineageTag: 00000000-0000-0000-0000-000000000017
@@ -237,7 +237,7 @@ table Turns
 
 	partition Turns = m
 		mode: import
-		source = let Source = Csv.Document(File.Contents("<ABSOLUTE_PATH_TO_REPO>\docs\sample-data\output\turns.csv"), [Delimiter=",", Columns=12, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"conversationId", type text}, {"timestamp", type datetime}, {"turnIndex", Int64.Type}, {"userUtterance", type text}, {"agentResponse", type text}, {"intent", type text}, {"intentConfidence", type number}, {"sentimentOverall", type text}, {"sentimentScore", type number}, {"latencyMs", Int64.Type}, {"ttsEnabled", type logical}, {"bargeInDetected", type logical}}) in #"Changed Type"
+		source = let Source = Csv.Document(File.Contents("E:\Personal\08_Projects-Code-Repos\talk-sense\docs\sample-data\output\turns.csv"), [Delimiter=",", Columns=12, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"conversationId", type text}, {"timestamp", type datetime}, {"turnIndex", Int64.Type}, {"userUtterance", type text}, {"agentResponse", type text}, {"intent", type text}, {"intentConfidence", type number}, {"sentimentOverall", type text}, {"sentimentScore", type number}, {"latencyMs", Int64.Type}, {"ttsEnabled", type logical}, {"bargeInDetected", type logical}}) in #"Changed Type"
 
 table Events
 	lineageTag: 00000000-0000-0000-0000-000000000036
@@ -320,7 +320,7 @@ table Events
 
 	partition Events = m
 		mode: import
-		source = let Source = Csv.Document(File.Contents("<ABSOLUTE_PATH_TO_REPO>\docs\sample-data\output\events.csv"), [Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"conversationId", type text}, {"timestamp", type datetime}, {"eventName", type text}, {"eventCategory", type text}, {"turnIndex", Int64.Type}}) in #"Changed Type"
+		source = let Source = Csv.Document(File.Contents("E:\Personal\08_Projects-Code-Repos\talk-sense\docs\sample-data\output\events.csv"), [Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"conversationId", type text}, {"timestamp", type datetime}, {"eventName", type text}, {"eventCategory", type text}, {"turnIndex", Int64.Type}}) in #"Changed Type"
 
 table Csat
 	lineageTag: 00000000-0000-0000-0000-000000000050
@@ -395,7 +395,7 @@ table Csat
 
 	partition Csat = m
 		mode: import
-		source = let Source = Csv.Document(File.Contents("<ABSOLUTE_PATH_TO_REPO>\docs\sample-data\output\csat.csv"), [Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"conversationId", type text}, {"timestamp", type datetime}, {"score", Int64.Type}, {"scale", type text}, {"comment", type text}, {"collectedVia", type text}}) in #"Changed Type"
+		source = let Source = Csv.Document(File.Contents("E:\Personal\08_Projects-Code-Repos\talk-sense\docs\sample-data\output\csat.csv"), [Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"conversationId", type text}, {"timestamp", type datetime}, {"score", Int64.Type}, {"scale", type text}, {"comment", type text}, {"collectedVia", type text}}) in #"Changed Type"
 
 table DimDate
 	lineageTag: 00000000-0000-0000-0000-000000000062
@@ -473,7 +473,7 @@ table DimDate
 
 	partition DimDate = m
 		mode: import
-		source = let Source = Csv.Document(File.Contents("<ABSOLUTE_PATH_TO_REPO>\docs\sample-data\output\dim_data.csv"), [Delimiter=",", Columns=10, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"dataKey", Int64.Type}, {"data", type date}, {"ano", Int64.Type}, {"mes", Int64.Type}, {"nome_mes", type text}, {"dia", Int64.Type}, {"dia_semana", Int64.Type}, {"nome_dia_semana", type text}, {"semana_ano", Int64.Type}, {"fim_de_semana", Int64.Type}}) in #"Changed Type"
+		source = let Source = Csv.Document(File.Contents("E:\Personal\08_Projects-Code-Repos\talk-sense\docs\sample-data\output\dim_data.csv"), [Delimiter=",", Columns=10, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"dataKey", Int64.Type}, {"data", type date}, {"ano", Int64.Type}, {"mes", Int64.Type}, {"nome_mes", type text}, {"dia", Int64.Type}, {"dia_semana", Int64.Type}, {"nome_dia_semana", type text}, {"semana_ano", Int64.Type}, {"fim_de_semana", Int64.Type}}) in #"Changed Type"
 
 relationship 00000000-0000-0000-0000-000000000073
 	fromColumn: Turns.conversationId
