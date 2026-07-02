@@ -1,4 +1,4 @@
-# 📋 Verificação Final - ARGUS GitHub Release Checklist
+# 📋 Verificação Final - TalkSense GitHub Release Checklist
 
 > **Data da verificação:** 2026-07-02  
 > **Versão:** 1.0.0  
@@ -16,29 +16,29 @@
 - [x] ✅ **TRANSFORMATION-SUMMARY.md** — Sumário da transformação
 
 ### Documentação Técnica
-- [x] ✅ **docs/plano-telemetria-analytics.md** — Atualizado para ARGUS
-  - Título: "ARGUS (Voice Agent Analytics)"
+- [x] ✅ **docs/plano-telemetria-analytics.md** — Atualizado para TalkSense
+  - Título: "TalkSense (Voice Agent Analytics)"
   - Status: Production-Ready
   - Licença: MIT
   - Sem referências a arquivos confidenciais
   
-- [x] ✅ **docs/powerbi-prompts.md** — Atualizado para ARGUS
-  - Projeto PBIP: "ARGUS_VoiceAnalytics"
+- [x] ✅ **docs/powerbi-prompts.md** — Atualizado para TalkSense
+  - Projeto PBIP: "TalkSense_VoiceAnalytics"
   - Estrutura de pastas atualizada
   
-- [x] ✅ **docs/sample-data/dicionario-de-dados.md** — Atualizado para ARGUS
-  - Gerador: "gerar_dados_sinteticos_argus.py"
+- [x] ✅ **docs/sample-data/dicionario-de-dados.md** — Atualizado para TalkSense
+  - Gerador: "gerar_dados_sinteticos_talksense.py"
   - Compliance: LGPD/GDPR explícito
   - Exemplos anonimizados
 
 ### Architecture Decision Records (ADRs)
 - [x] ✅ **docs/adr/adr-001-banco-de-dados-analytics.md**
-  - Projeto: ARGUS adicionado
+  - Projeto: TalkSense adicionado
   - Status: Accepted (implementado)
   - Contexto genérico
   
 - [x] ✅ **docs/adr/adr-002-ingestao-fabric-rti-eventhouse.md**
-  - Projeto: ARGUS adicionado
+  - Projeto: TalkSense adicionado
   - Status: Accepted (Plano B)
   - Compliance: LGPD/GDPR
 
@@ -53,7 +53,7 @@
 - [x] ✅ **infra/deploy-planb.ps1** — Script automatizado
 
 ### Dados Sintéticos
-- [x] ✅ **docs/sample-data/gerar_dados_sinteticos_argus.py** — Gerador anonimizado
+- [x] ✅ **docs/sample-data/gerar_dados_sinteticos_talksense.py** — Gerador anonimizado
 - [x] ✅ **docs/sample-data/output/** — Dados gerados
   - eventhub_events.json (1.820 eventos)
   - event_sample.json
@@ -119,12 +119,12 @@ Estes arquivos **NÃO serão enviados ao GitHub**:
 ```bash
 git init
 git add .
-git commit -m "🎉 Initial commit - ARGUS v1.0.0"
+git commit -m "🎉 Initial commit - TalkSense v1.0.0"
 ```
 
 ### Criar Repositório (GitHub CLI)
 ```bash
-gh repo create ARGUS --public \
+gh repo create talk-sense --public \
   --description "Real-time voice agent analytics for financial services" \
   --source=. --push
 ```
@@ -133,14 +133,14 @@ gh repo create ARGUS --public \
 ```bash
 # 1. Criar repo no github.com
 # 2. Executar:
-git remote add origin https://github.com/<seu-usuario>/ARGUS.git
+git remote add origin https://github.com/<seu-usuario>/talk-sense.git
 git branch -M main
 git push -u origin main
 ```
 
 ### Criar Release/Tag
 ```bash
-git tag -a v1.0.0 -m "ARGUS v1.0.0 - Initial Release"
+git tag -a v1.0.0 -m "TalkSense v1.0.0 - Initial Release"
 git push origin v1.0.0
 ```
 
@@ -165,7 +165,7 @@ git push origin v1.0.0
 - [x] README.md profissional
 - [x] LICENSE MIT incluída
 - [x] CONTRIBUTING.md criado
-- [x] Todos os docs atualizados para ARGUS
+- [x] Todos os docs atualizados para TalkSense
 - [x] ADRs com status "Accepted"
 - [x] Links internos funcionando
 
@@ -206,7 +206,7 @@ git push origin v1.0.0
 
 ---
 
-**Nome do Projeto:** ARGUS  
+**Nome do Projeto:** TalkSense  
 **Tagline:** Analytics & Real-time Governance for Universal Supervision  
 **Descrição:** Real-time voice agent analytics platform for the financial sector  
 **Licença:** MIT  
@@ -215,6 +215,6 @@ git push origin v1.0.0
 
 ---
 
-👁️ **ARGUS is ready to watch over voice agent analytics worldwide!**
+👁️ **TalkSense is ready to watch over voice agent analytics worldwide!**
 
 Developed with ❤️ for the financial services sector

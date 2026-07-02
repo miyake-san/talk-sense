@@ -25,7 +25,7 @@ O escopo permite escolher entre **Cosmos DB** ou **DocumentDB**. Interpretamos a
 - **B) Microsoft Fabric Eventhouse** (KQL Database) — store analítico nativo para telemetria estruturada.
 - **C) Hybrid approach** — Event Hubs para ingestão + escolha de store downstream.
 
-(Nota: A decisão final do projeto ARGUS foi o **Plano B**: Event Hubs → Fabric Eventstream → Eventhouse,
+(Nota: A decisão final do projeto TalkSense foi o **Plano B**: Event Hubs → Fabric Eventstream → Eventhouse,
 documentado em ADR-002, que oferece melhor time-to-dashboard e analytics nativo.)
 
 ## Critérios de decisão

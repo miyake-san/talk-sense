@@ -1,0 +1,48 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric-item/report/visualContainerProperties/1.1.0/schema.json",
+  "name": "cardErro",
+  "position": {
+    "x": 920,
+    "y": 20,
+    "z": 0,
+    "width": 280,
+    "height": 160,
+    "tabOrder": 920
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": { "SourceRef": { "Entity": "Events" } },
+                  "Property": "Taxa de Erro (%)"
+                }
+              },
+              "queryRef": "Events.Taxa de Erro (%)",
+              "nativeQueryRef": "Taxa de Erro (%)"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "categoryLabels": [
+        { "properties": { "show": { "expr": { "Literal": { "Value": "true" } } } } }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": { "expr": { "Literal": { "Value": "true" } } },
+            "text": { "expr": { "Literal": { "Value": "'Taxa de Erro (%)'" } } }
+          }
+        }
+      ]
+    }
+  }
+}

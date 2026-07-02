@@ -1,0 +1,493 @@
+model Model
+	culture: pt-BR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pt-BR
+	discourageImplicitMeasures
+	annotation PBI_QueryOrder = ["Conversations","Turns","Events","Csat","DimDate"]
+
+annotation PBIDesktopVersion = "2.130.0 (24.05)"
+
+table Conversations
+	lineageTag: 00000000-0000-0000-0000-000000000001
+
+	column conversationId
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000002
+		summarizeBy: none
+		sourceColumn: conversationId
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp
+		dataType: dateTime
+		lineageTag: 00000000-0000-0000-0000-000000000003
+		summarizeBy: none
+		sourceColumn: timestamp
+		annotation SummarizationSetBy = Automatic
+
+	column sessionId
+		dataType: string
+		isHidden
+		lineageTag: 00000000-0000-0000-0000-000000000004
+		summarizeBy: none
+		sourceColumn: sessionId
+		annotation SummarizationSetBy = Automatic
+
+	column channel
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000005
+		summarizeBy: none
+		sourceColumn: channel
+		annotation SummarizationSetBy = Automatic
+
+	column customerIdAnon
+		dataType: string
+		isHidden
+		lineageTag: 00000000-0000-0000-0000-000000000006
+		summarizeBy: none
+		sourceColumn: customerIdAnon
+		annotation SummarizationSetBy = Automatic
+
+	column customerSegment
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000007
+		summarizeBy: none
+		sourceColumn: customerSegment
+		annotation SummarizationSetBy = Automatic
+
+	column initialIntent
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000008
+		summarizeBy: none
+		sourceColumn: initialIntent
+		annotation SummarizationSetBy = Automatic
+
+	column originQueue
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000009
+		summarizeBy: none
+		sourceColumn: originQueue
+		annotation SummarizationSetBy = Automatic
+
+	column outcome
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000010
+		summarizeBy: none
+		sourceColumn: outcome
+		annotation SummarizationSetBy = Automatic
+
+	column durationSeconds
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000011
+		summarizeBy: sum
+		sourceColumn: durationSeconds
+		annotation SummarizationSetBy = Automatic
+
+	column totalTurns
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000012
+		summarizeBy: sum
+		sourceColumn: totalTurns
+		annotation SummarizationSetBy = Automatic
+
+	column DateKey
+		dataType: int64
+		isHidden
+		lineageTag: 00000000-0000-0000-0000-000000000013
+		summarizeBy: none
+		type: calculated
+		expression: INT(FORMAT('Conversations'[timestamp], "YYYYMMDD"))
+		annotation SummarizationSetBy = Automatic
+
+	measure 'Total Conversas' = COUNTROWS(Conversations)
+		formatString: #,##0
+		lineageTag: 00000000-0000-0000-0000-000000000014
+		displayFolder: 01 Retencao IA
+
+	measure 'Conversas Resolvidas IA' = CALCULATE(COUNTROWS(Conversations), Conversations[outcome] = "resolved_by_ai")
+		formatString: #,##0
+		lineageTag: 00000000-0000-0000-0000-000000000015
+		displayFolder: 01 Retencao IA
+
+	measure 'Retencao IA (%)' = DIVIDE([Conversas Resolvidas IA], [Total Conversas])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 00000000-0000-0000-0000-000000000016
+		displayFolder: 01 Retencao IA
+
+	partition Conversations = m
+		mode: import
+		source = let Source = Csv.Document(File.Contents("<ABSOLUTE_PATH_TO_REPO>\docs\sample-data\output\conversations.csv"), [Delimiter=",", Columns=11, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"conversationId", type text}, {"timestamp", type datetime}, {"sessionId", type text}, {"channel", type text}, {"customerIdAnon", type text}, {"customerSegment", type text}, {"initialIntent", type text}, {"originQueue", type text}, {"outcome", type text}, {"durationSeconds", Int64.Type}, {"totalTurns", Int64.Type}}) in #"Changed Type"
+
+table Turns
+	lineageTag: 00000000-0000-0000-0000-000000000017
+
+	column conversationId
+		dataType: string
+		isHidden
+		lineageTag: 00000000-0000-0000-0000-000000000018
+		summarizeBy: none
+		sourceColumn: conversationId
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp
+		dataType: dateTime
+		lineageTag: 00000000-0000-0000-0000-000000000019
+		summarizeBy: none
+		sourceColumn: timestamp
+		annotation SummarizationSetBy = Automatic
+
+	column turnIndex
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000020
+		summarizeBy: none
+		sourceColumn: turnIndex
+		annotation SummarizationSetBy = Automatic
+
+	column userUtterance
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000021
+		summarizeBy: none
+		sourceColumn: userUtterance
+		annotation SummarizationSetBy = Automatic
+
+	column agentResponse
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000022
+		summarizeBy: none
+		sourceColumn: agentResponse
+		annotation SummarizationSetBy = Automatic
+
+	column intent
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000023
+		summarizeBy: none
+		sourceColumn: intent
+		annotation SummarizationSetBy = Automatic
+
+	column intentConfidence
+		dataType: double
+		lineageTag: 00000000-0000-0000-0000-000000000024
+		summarizeBy: none
+		sourceColumn: intentConfidence
+		annotation SummarizationSetBy = Automatic
+
+	column sentimentOverall
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000025
+		summarizeBy: none
+		sourceColumn: sentimentOverall
+		annotation SummarizationSetBy = Automatic
+
+	column sentimentScore
+		dataType: double
+		lineageTag: 00000000-0000-0000-0000-000000000026
+		summarizeBy: none
+		sourceColumn: sentimentScore
+		annotation SummarizationSetBy = Automatic
+
+	column latencyMs
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000027
+		summarizeBy: average
+		sourceColumn: latencyMs
+		annotation SummarizationSetBy = Automatic
+
+	column ttsEnabled
+		dataType: boolean
+		lineageTag: 00000000-0000-0000-0000-000000000028
+		summarizeBy: none
+		sourceColumn: ttsEnabled
+		annotation SummarizationSetBy = Automatic
+
+	column bargeInDetected
+		dataType: boolean
+		lineageTag: 00000000-0000-0000-0000-000000000029
+		summarizeBy: none
+		sourceColumn: bargeInDetected
+		annotation SummarizationSetBy = Automatic
+
+	measure 'TMR (ms)' = AVERAGE(Turns[latencyMs])
+		formatString: #,##0
+		lineageTag: 00000000-0000-0000-0000-000000000030
+		displayFolder: 02 TMR
+
+	measure 'TMR (segundos)' = DIVIDE([TMR (ms)], 1000)
+		formatString: 0.00
+		lineageTag: 00000000-0000-0000-0000-000000000031
+		displayFolder: 02 TMR
+
+	measure 'TMA (ms)' = MAX(Turns[latencyMs])
+		formatString: #,##0
+		lineageTag: 00000000-0000-0000-0000-000000000032
+		displayFolder: 03 TMA
+
+	measure 'TMA (segundos)' = DIVIDE([TMA (ms)], 1000)
+		formatString: 0.00
+		lineageTag: 00000000-0000-0000-0000-000000000033
+		displayFolder: 03 TMA
+
+	measure 'Acionamentos por Intent' = COUNTROWS(Turns)
+		formatString: #,##0
+		lineageTag: 00000000-0000-0000-0000-000000000034
+		displayFolder: 04 Top Intents
+
+	measure 'Rank Intent' = RANKX(ALL(Turns[intent]), [Acionamentos por Intent], , DESC, Dense)
+		formatString: #,##0
+		lineageTag: 00000000-0000-0000-0000-000000000035
+		displayFolder: 04 Top Intents
+
+	partition Turns = m
+		mode: import
+		source = let Source = Csv.Document(File.Contents("<ABSOLUTE_PATH_TO_REPO>\docs\sample-data\output\turns.csv"), [Delimiter=",", Columns=12, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"conversationId", type text}, {"timestamp", type datetime}, {"turnIndex", Int64.Type}, {"userUtterance", type text}, {"agentResponse", type text}, {"intent", type text}, {"intentConfidence", type number}, {"sentimentOverall", type text}, {"sentimentScore", type number}, {"latencyMs", Int64.Type}, {"ttsEnabled", type logical}, {"bargeInDetected", type logical}}) in #"Changed Type"
+
+table Events
+	lineageTag: 00000000-0000-0000-0000-000000000036
+
+	column conversationId
+		dataType: string
+		isHidden
+		lineageTag: 00000000-0000-0000-0000-000000000037
+		summarizeBy: none
+		sourceColumn: conversationId
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp
+		dataType: dateTime
+		lineageTag: 00000000-0000-0000-0000-000000000038
+		summarizeBy: none
+		sourceColumn: timestamp
+		annotation SummarizationSetBy = Automatic
+
+	column eventName
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000039
+		summarizeBy: none
+		sourceColumn: eventName
+		annotation SummarizationSetBy = Automatic
+
+	column eventCategory
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000040
+		summarizeBy: none
+		sourceColumn: eventCategory
+		annotation SummarizationSetBy = Automatic
+
+	column turnIndex
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000041
+		summarizeBy: none
+		sourceColumn: turnIndex
+		annotation SummarizationSetBy = Automatic
+
+	measure 'Eventos Nao Compreensao' = CALCULATE(COUNTROWS(Events), Events[eventName] IN {"no_comprehension", "knowledge_gap"})
+		formatString: #,##0
+		lineageTag: 00000000-0000-0000-0000-000000000042
+		displayFolder: 05 Transbordo
+
+	measure 'Transbordo Nao Compreensao (%)' = DIVIDE([Eventos Nao Compreensao], [Total Conversas])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 00000000-0000-0000-0000-000000000043
+		displayFolder: 05 Transbordo
+
+	measure 'Eventos Retorno URA' = CALCULATE(COUNTROWS(Events), Events[eventName] = "returned_to_ura")
+		formatString: #,##0
+		lineageTag: 00000000-0000-0000-0000-000000000044
+		displayFolder: 06 Retorno URA
+
+	measure 'Retorno URA (%)' = DIVIDE([Eventos Retorno URA], [Total Conversas])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 00000000-0000-0000-0000-000000000045
+		displayFolder: 06 Retorno URA
+
+	measure 'Eventos Pedido Atendente' = CALCULATE(COUNTROWS(Events), Events[eventName] = "agent_requested")
+		formatString: #,##0
+		lineageTag: 00000000-0000-0000-0000-000000000046
+		displayFolder: 07 Pedido Atendente
+
+	measure 'Pedido Atendente (%)' = DIVIDE([Eventos Pedido Atendente], [Total Conversas])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 00000000-0000-0000-0000-000000000047
+		displayFolder: 07 Pedido Atendente
+
+	measure 'Eventos Erro Sistema' = CALCULATE(COUNTROWS(Events), Events[eventName] = "system_error")
+		formatString: #,##0
+		lineageTag: 00000000-0000-0000-0000-000000000048
+		displayFolder: 08 Erros
+
+	measure 'Taxa de Erro (%)' = DIVIDE([Eventos Erro Sistema], [Total Conversas])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 00000000-0000-0000-0000-000000000049
+		displayFolder: 08 Erros
+
+	partition Events = m
+		mode: import
+		source = let Source = Csv.Document(File.Contents("<ABSOLUTE_PATH_TO_REPO>\docs\sample-data\output\events.csv"), [Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"conversationId", type text}, {"timestamp", type datetime}, {"eventName", type text}, {"eventCategory", type text}, {"turnIndex", Int64.Type}}) in #"Changed Type"
+
+table Csat
+	lineageTag: 00000000-0000-0000-0000-000000000050
+
+	column conversationId
+		dataType: string
+		isHidden
+		lineageTag: 00000000-0000-0000-0000-000000000051
+		summarizeBy: none
+		sourceColumn: conversationId
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp
+		dataType: dateTime
+		lineageTag: 00000000-0000-0000-0000-000000000052
+		summarizeBy: none
+		sourceColumn: timestamp
+		annotation SummarizationSetBy = Automatic
+
+	column score
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000053
+		summarizeBy: average
+		sourceColumn: score
+		annotation SummarizationSetBy = Automatic
+
+	column scale
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000054
+		summarizeBy: none
+		sourceColumn: scale
+		annotation SummarizationSetBy = Automatic
+
+	column comment
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000055
+		summarizeBy: none
+		sourceColumn: comment
+		annotation SummarizationSetBy = Automatic
+
+	column collectedVia
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000056
+		summarizeBy: none
+		sourceColumn: collectedVia
+		annotation SummarizationSetBy = Automatic
+
+	measure 'Total Respostas CSAT' = COUNTROWS(Csat)
+		formatString: #,##0
+		lineageTag: 00000000-0000-0000-0000-000000000057
+		displayFolder: 09 CSAT
+
+	measure 'CSAT Medio' = AVERAGE(Csat[score])
+		formatString: 0.00
+		lineageTag: 00000000-0000-0000-0000-000000000058
+		displayFolder: 09 CSAT
+
+	measure 'CSAT Promotores' = CALCULATE(COUNTROWS(Csat), Csat[score] >= 4)
+		formatString: #,##0
+		lineageTag: 00000000-0000-0000-0000-000000000059
+		displayFolder: 09 CSAT
+
+	measure 'CSAT Detratores' = CALCULATE(COUNTROWS(Csat), Csat[score] <= 2)
+		formatString: #,##0
+		lineageTag: 00000000-0000-0000-0000-000000000060
+		displayFolder: 09 CSAT
+
+	measure 'NPS' = DIVIDE([CSAT Promotores], [Total Respostas CSAT]) - DIVIDE([CSAT Detratores], [Total Respostas CSAT])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 00000000-0000-0000-0000-000000000061
+		displayFolder: 09 CSAT
+
+	partition Csat = m
+		mode: import
+		source = let Source = Csv.Document(File.Contents("<ABSOLUTE_PATH_TO_REPO>\docs\sample-data\output\csat.csv"), [Delimiter=",", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"conversationId", type text}, {"timestamp", type datetime}, {"score", Int64.Type}, {"scale", type text}, {"comment", type text}, {"collectedVia", type text}}) in #"Changed Type"
+
+table DimDate
+	lineageTag: 00000000-0000-0000-0000-000000000062
+
+	column dataKey
+		dataType: int64
+		isHidden
+		lineageTag: 00000000-0000-0000-0000-000000000063
+		summarizeBy: none
+		sourceColumn: dataKey
+		annotation SummarizationSetBy = Automatic
+
+	column data
+		dataType: dateTime
+		lineageTag: 00000000-0000-0000-0000-000000000064
+		summarizeBy: none
+		sourceColumn: data
+		annotation SummarizationSetBy = Automatic
+
+	column ano
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000065
+		summarizeBy: none
+		sourceColumn: ano
+		annotation SummarizationSetBy = Automatic
+
+	column mes
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000066
+		summarizeBy: none
+		sourceColumn: mes
+		annotation SummarizationSetBy = Automatic
+
+	column nome_mes
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000067
+		summarizeBy: none
+		sourceColumn: nome_mes
+		annotation SummarizationSetBy = Automatic
+
+	column dia
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000068
+		summarizeBy: none
+		sourceColumn: dia
+		annotation SummarizationSetBy = Automatic
+
+	column dia_semana
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000069
+		summarizeBy: none
+		sourceColumn: dia_semana
+		annotation SummarizationSetBy = Automatic
+
+	column nome_dia_semana
+		dataType: string
+		lineageTag: 00000000-0000-0000-0000-000000000070
+		summarizeBy: none
+		sourceColumn: nome_dia_semana
+		annotation SummarizationSetBy = Automatic
+
+	column semana_ano
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000071
+		summarizeBy: none
+		sourceColumn: semana_ano
+		annotation SummarizationSetBy = Automatic
+
+	column fim_de_semana
+		dataType: int64
+		lineageTag: 00000000-0000-0000-0000-000000000072
+		summarizeBy: none
+		sourceColumn: fim_de_semana
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDate = m
+		mode: import
+		source = let Source = Csv.Document(File.Contents("<ABSOLUTE_PATH_TO_REPO>\docs\sample-data\output\dim_data.csv"), [Delimiter=",", Columns=10, Encoding=65001, QuoteStyle=QuoteStyle.None]), #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]), #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"dataKey", Int64.Type}, {"data", type date}, {"ano", Int64.Type}, {"mes", Int64.Type}, {"nome_mes", type text}, {"dia", Int64.Type}, {"dia_semana", Int64.Type}, {"nome_dia_semana", type text}, {"semana_ano", Int64.Type}, {"fim_de_semana", Int64.Type}}) in #"Changed Type"
+
+relationship 00000000-0000-0000-0000-000000000073
+	fromColumn: Turns.conversationId
+	toColumn: Conversations.conversationId
+
+relationship 00000000-0000-0000-0000-000000000074
+	fromColumn: Events.conversationId
+	toColumn: Conversations.conversationId
+
+relationship 00000000-0000-0000-0000-000000000075
+	fromColumn: Csat.conversationId
+	toColumn: Conversations.conversationId
+
+relationship 00000000-0000-0000-0000-000000000076
+	fromColumn: Conversations.DateKey
+	toColumn: DimDate.dataKey
+

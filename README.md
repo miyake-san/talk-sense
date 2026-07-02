@@ -113,7 +113,7 @@ Follow the guide: [`fabric-configuration.md`](infra/docs/fabric-configuration.md
 
 ```bash
 cd docs/sample-data
-python gerar_dados_sinteticos_argus.py --conversas 1000 --dias 30
+python gerar_dados_sinteticos_talksense.py --conversas 1000 --dias 30
 ```
 
 **Outputs**:
@@ -127,6 +127,12 @@ Follow: [`powerbi-configuration.md`](infra/docs/powerbi-configuration.md)
 1. Connect to Eventhouse via **Direct Lake**
 2. Import **DAX measures** (9 metrics)
 3. Create 3 dashboard pages
+
+> ✅ A ready-to-open **PBIP project** with the semantic model (all 9 metrics as DAX measures) and a starter report is available at [`powerbi/TalkSense.pbip`](powerbi/README.md).
+
+### 5. Simulate Event Hub for a POC (optional)
+
+Infra deployment scripts provision Event Hub/Eventstream/Eventhouse only — they do **not** upload or stream the sample datasets. To generate a continuous, realistic event flow for a POC without a real Event Hub, use the Fabric notebook simulator: [`mock/talksense_eventhub_simulator.ipynb`](mock/README.md).
 
 ---
 
@@ -144,11 +150,17 @@ talksense/
 │   │   └── architecture-diagram.md       # Mermaid diagrams
 │   ├── deploy-planb.ps1               # Automated deployment
 │   └── README.md                      # Infrastructure guide
+├── powerbi/                    # Power BI Project (PBIP) with the 9 metrics
+│   ├── TalkSense.pbip                 # Open this in Power BI Desktop
+│   ├── TalkSense.Report/              # Report definition (PBIR)
+│   └── TalkSense.SemanticModel/       # Semantic model (TMDL) + DAX measures
+├── mock/                       # POC simulators (not for production)
+│   └── talksense_eventhub_simulator.ipynb  # Fabric notebook: simulates Event Hub traffic
 ├── docs/
 │   ├── plano-telemetria-analytics.md  # Main analytics plan
 │   ├── powerbi-prompts.md             # Power BI guidance
 │   ├── sample-data/                   # Synthetic data generator
-│   │   ├── gerar_dados_sinteticos_argus.py  # Python generator
+│   │   ├── gerar_dados_sinteticos_talksense.py  # Python generator
 │   │   └── output/                    # Generated CSVs + JSON
 │   └── adr/                           # Architecture decisions
 │       ├── adr-001-banco-de-dados-analytics.md
@@ -251,6 +263,8 @@ TalkSense uses 4 event types:
 | [Fabric Configuration](infra/docs/fabric-configuration.md) | Eventstream & Eventhouse setup | 16 KB |
 | [Power BI Guide](infra/docs/powerbi-configuration.md) | Dashboards & DAX measures | 16 KB |
 | [Architecture Diagrams](infra/docs/architecture-diagram.md) | Mermaid diagrams | 12 KB |
+| [Power BI Project (PBIP)](powerbi/README.md) | Semantic model + DAX measures + starter report | — |
+| [Event Hub Simulator](mock/README.md) | Fabric notebook for POC event simulation | — |
 | [ADR-001](docs/adr/adr-001-banco-de-dados-analytics.md) | Database choice decision | 6 KB |
 | [ADR-002](docs/adr/adr-002-ingestao-fabric-rti-eventhouse.md) | Fabric RTI ingestion decision | 11 KB |
 
