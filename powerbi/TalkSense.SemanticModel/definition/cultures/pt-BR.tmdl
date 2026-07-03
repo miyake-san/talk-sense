@@ -2,8 +2,199 @@ cultureInfo pt-BR
 
 	linguisticMetadata =
 			{
-			  "Version": "1.0.0",
-			  "Language": "en-US"
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "conversations.retencao_ia_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Conversations",
+			          "ConceptualProperty": "Retencao IA (%)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Retenção da IA (%)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "turns.tmr_segundos": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Turns",
+			          "ConceptualProperty": "TMR (segundos)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "TMR (s)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "turns.tma_segundos": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Turns",
+			          "ConceptualProperty": "TMA (segundos)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "TMA (s)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "events.transbordo_nao_compreensao_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Events",
+			          "ConceptualProperty": "Transbordo Nao Compreensao (%)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Transbordo Não-Compreensão (%)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "events.retorno_ura_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Events",
+			          "ConceptualProperty": "Retorno URA (%)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Retorno ao Menu URA (%)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "events.pedido_atendente_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Events",
+			          "ConceptualProperty": "Pedido Atendente (%)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Pedido de Atendente (%)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "events.taxa_de_erro_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Events",
+			          "ConceptualProperty": "Taxa de Erro (%)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Erros do Sistema (%)": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "csat.csat_medio": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Csat",
+			          "ConceptualProperty": "CSAT Medio"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "CSAT Médio": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "csat.nps": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Csat",
+			          "ConceptualProperty": "NPS"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "NPS": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
 			}
 		contentType: json
 

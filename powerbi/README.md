@@ -8,7 +8,7 @@ Projeto Power BI Desktop no formato **PBIP + TMDL** (Power BI Project), version�
 powerbi/
 ├── TalkSense.pbip                  # Arquivo raiz — abra este no Power BI Desktop
 ├── TalkSense.Report/                # Definição do relatório (PBIR)
-│   └── definition/pages/overview/   # Página "Overview" (canvas em branco — veja "Adicionando os cards KPI" abaixo)
+│   └── definition/pages/            # Página "Overview" populada com as 9 métricas core (cards + gráfico de intents)
 └── TalkSense.SemanticModel/         # Modelo semântico (TMDL)
     └── definition/
         ├── model.tmdl                # Metadados do modelo, cultura, referências às tabelas
@@ -53,12 +53,12 @@ Todas as medidas e fórmulas DAX completas estão documentadas em [`../infra/doc
    - Gere os CSVs antes, se necessário: `python docs/sample-data/gerar_dados_sinteticos_talksense.py --conversas 1000 --dias 30`.
 4. Clique em **Atualizar** para carregar os dados.
 
-## Adicionando os cards KPI na página Overview
+## Página Overview
 
-A página "Overview" é entregue **em branco de propósito**. Tentativas de versionar os 4 visuals de KPI diretamente como arquivos PBIR (`visual.json`) causaram um crash reproduzível no Power BI Desktop (`Cannot read properties of undefined (reading 'visualContainers')` em `DesktopExplorationComponent.onExplorationActivated`), mesmo com JSON validado contra o schema oficial. A causa raiz é uma incompatibilidade do parser de PBIR desta build do Desktop com visuals autorados manualmente — não um defeito no modelo. O caminho confiável é adicionar os cards pela interface:
+A página **Overview** já vem populada com as **9 métricas core** (8 cartões + 1 gráfico "Principais Acionamentos por Intent"), no formato **PBIR gerado pelo próprio Power BI Desktop** (seguro para versionar). **Ao adicionar novos visuais, atenção:** versionar visuais como arquivos PBIR (`visual.json`) **editados à mão** causou um crash reproduzível no Power BI Desktop (`Cannot read properties of undefined (reading 'visualContainers')` em `DesktopExplorationComponent.onExplorationActivated`), mesmo com JSON validado contra o schema oficial. A causa raiz é uma incompatibilidade do parser de PBIR desta build do Desktop com visuals autorados manualmente — não um defeito no modelo. O caminho confiável é adicionar os cards pela interface:
 
-1. Abra `powerbi/TalkSense.pbip` no Power BI Desktop e confirme que a página **Overview** está selecionada (canvas em branco).
-2. Na faixa **Inserir**, clique em **Visual** → escolha **Cartão** (Card) — repita este passo uma vez para cada uma das 4 métricas abaixo.
+1. Abra `powerbi/TalkSense.pbip` no Power BI Desktop e confirme que a página **Overview** está selecionada.
+2. Na faixa **Inserir**, clique em **Visual** → escolha **Cartão** (Card) — repita para cada métrica que quiser adicionar.
 3. Com o cartão selecionado, no painel **Dados** (lado direito), localize a tabela e arraste a medida para o campo **Valores** do cartão:
 
    | Cartão | Tabela | Medida |
