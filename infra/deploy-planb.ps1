@@ -302,7 +302,7 @@ Copy measures from \`docs/powerbi-configuration.md\` → Section "Parte 3":
 
 ## 🔒 Phase 6: Security & Compliance
 
-- [ ] Verify PII masking in \`userUtterance\` field
+- [ ] Verify PII masking in userUtterance field
 - [ ] Apply RLS in Power BI (if needed)
 - [ ] Review data retention policies (Event Hub, Eventhouse)
 - [ ] Configure Private Endpoints (production only)
@@ -329,8 +329,8 @@ Copy measures from \`docs/powerbi-configuration.md\` → Section "Parte 3":
 | [\`docs/event-hub-message-format.md\`](docs/event-hub-message-format.md) | Message schema specification |
 | [\`docs/fabric-configuration.md\`](docs/fabric-configuration.md) | Fabric Eventstream/Eventhouse setup |
 | [\`docs/powerbi-configuration.md\`](docs/powerbi-configuration.md) | Power BI dashboards and DAX |
-| [\`../../docs/plano-telemetria-analytics.md\`](../../docs/plano-telemetria-analytics.md) | Complete analytics plan |
-| [\`../../docs/adr/adr-002-ingestao-fabric-rti-eventhouse.md\`](../../docs/adr/adr-002-ingestao-fabric-rti-eventhouse.md) | Architecture decision record |
+| [\`../docs/plano-telemetria-analytics.md\`](../docs/plano-telemetria-analytics.md) | Complete analytics plan |
+| [\`../docs/adr/adr-004-real-time-metrics-event-hubs-fabric.md\`](../docs/adr/adr-004-real-time-metrics-event-hubs-fabric.md) | Architecture decision record |
 
 ---
 

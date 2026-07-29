@@ -4,7 +4,7 @@
 # Terraform configuration for:
 # Agent → Event Hubs → Fabric Eventstream → Eventhouse → Power BI
 #
-# Based on: ADR-002 - Ingestion via Fabric RTI
+# Based on: ADR-004 - Real-Time Metrics with Event Hubs and Fabric
 # ============================================================================
 
 terraform {

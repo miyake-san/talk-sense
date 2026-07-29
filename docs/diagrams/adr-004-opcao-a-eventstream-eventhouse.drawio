@@ -1,10 +1,10 @@
 <mxfile host="app.diagrams.net" modified="2026-07-02T00:00:00.000Z" agent="GitHub Copilot" version="24.7.17">
-  <diagram id="adr002-opcaoA" name="Opcao A - Eventstream para Eventhouse">
+  <diagram id="adr004-opcaoA" name="Opcao A - Eventstream para Eventhouse">
     <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="600" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="titleA" value="ADR-002 - Opcao A: Agente -&gt; Eventstream (custom endpoint) -&gt; Eventhouse -&gt; Power BI" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontStyle=1;fontSize=15;" vertex="1" parent="1">
+        <mxCell id="titleA" value="ADR-004 - Opcao A: Agente -&gt; Eventstream (custom endpoint) -&gt; Eventhouse -&gt; Power BI" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontStyle=1;fontSize=15;" vertex="1" parent="1">
           <mxGeometry x="40" y="8" width="1120" height="26" as="geometry" />
         </mxCell>
         <mxCell id="gProd" value="Produtor" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFF7F0;strokeColor=#D79B00;verticalAlign=top;fontStyle=1;fontSize=13;" vertex="1" parent="1">

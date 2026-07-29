@@ -18,7 +18,7 @@
 ### Documentação Técnica
 - [x] ✅ **docs/plano-telemetria-analytics.md** — Atualizado para TalkSense
   - Título: "TalkSense (Voice Agent Analytics)"
-  - Status: Production-Ready
+  - Status: referência analítica implementada; arquitetura de destino proposta
   - Licença: MIT
   - Sem referências a arquivos confidenciais
   
@@ -32,15 +32,16 @@
   - Exemplos anonimizados
 
 ### Architecture Decision Records (ADRs)
-- [x] ✅ **docs/adr/adr-001-banco-de-dados-analytics.md**
-  - Projeto: TalkSense adicionado
-  - Status: Accepted (implementado)
-  - Contexto genérico
-  
-- [x] ✅ **docs/adr/adr-002-ingestao-fabric-rti-eventhouse.md**
-  - Projeto: TalkSense adicionado
-  - Status: Accepted (Plano B)
-  - Compliance: LGPD/GDPR
+- [x] ✅ **docs/adr/README.md**
+  - Índice e status das sete decisões propostas
+  - Migração dos identificadores ADR-001 e ADR-002 documentada
+
+- [x] ✅ **docs/adr/adr-001-...md a adr-007-...md**
+  - Foundry, voz, conversation mining, Event Hubs/Fabric, ontologia, arquitetura ponta a ponta e segurança
+  - Status: Proposed
+
+- [x] ✅ **docs/adr/implementation-roadmap.md**
+  - Premissas, fases e checklist de issues de implementação
 
 ### Infrastructure as Code
 - [x] ✅ **infra/bicep/** — Azure Bicep templates
@@ -85,7 +86,7 @@ Estes arquivos **NÃO serão enviados ao GitHub**:
 - [x] ✅ "PF Digital" → "Premium" / "Standard" / "VIP"
 - [x] ✅ "CX_CRL_Geral_Investimentos" → "atendimento_principal"
 - [x] ✅ "Investimentos" → Contexto genérico
-- [x] ✅ "POC/MVP" → "Production-Ready"
+- [x] ✅ Terminologia de maturidade revisada; produção depende dos controles do roadmap
 - [x] ✅ Arquivos confidenciais → Referências removidas
 
 ### Dados Sintéticos
@@ -93,7 +94,7 @@ Estes arquivos **NÃO serão enviados ao GitHub**:
 - [x] ✅ Transcrições mascaradas ([MASKED])
 - [x] ✅ Produtos genéricos
 - [x] ✅ Nomes de instituições genéricos
-- [x] ✅ Compliance LGPD/GDPR
+- [x] ✅ Dados sintéticos sem PII real; conformidade de produção não avaliada
 
 ---
 
@@ -180,7 +181,7 @@ git push origin v1.0.0
 - [x] .gitignore configurado
 - [x] Arquivos sensíveis protegidos
 - [x] Anonimização completa
-- [x] Compliance LGPD/GDPR
+- [ ] Controles e aprovação LGPD/GDPR de produção conforme ADR-007
 - [x] SHA256 para IDs
 - [x] PII mascarado
 
@@ -195,13 +196,13 @@ git push origin v1.0.0
 
 ## 🎉 Status Final
 
-**✅ PROJETO 100% PRONTO PARA GITHUB**
+**✅ REFERÊNCIA ANALÍTICA PRONTA PARA GITHUB; ARQUITETURA DE DESTINO PROPOSTA**
 
 - ✅ Anonimização completa
 - ✅ Documentação atualizada
-- ✅ IaC production-ready
+- ✅ IaC de referência para Event Hubs
 - ✅ Dados sintéticos gerados
-- ✅ Compliance LGPD/GDPR
+- ⏳ Compliance de produção depende dos controles e aprovações da ADR-007
 - ✅ Open-source ready
 
 ---

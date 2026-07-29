@@ -8,11 +8,14 @@
 
 - **Projeto:** TalkSense (Open Source Reference Implementation)
 - **Autor:** Time de Arquitetura / Analytics
-- **Status:** Production-Ready
+- **Status:** Analytics reference implemented; target architecture proposed
 - **Versão:** 1.0
 - **Licença:** MIT
 - **Fontes de referência:** Boas práticas de dashboards de _contact center_ / _voice AI_, 
   Azure Well-Architected Framework, Microsoft Fabric Real-Time Intelligence best practices.
+
+> Este documento registra o plano analítico original. As decisões de arquitetura de destino e
+> suas substituições estão no [índice de ADRs](./adr/README.md).
 
 ---
 
@@ -106,7 +109,9 @@ já reservamos campos no modelo para reportá-los no mesmo dashboard:
   documento consolidado no encerramento. É o **produtor** dos dados.
 - **Camada de ingestão:** endpoint de coleta (Azure Event Hubs, Kafka ou API HTTPS). Uma função de
   processamento (Azure Functions / Stream Analytics) normaliza e grava nos _containers_ do Cosmos DB.
-- **Base de dados (OLTP):** **Azure Cosmos DB for NoSQL** (ver [ADR-001](./adr/adr-001-banco-de-dados-analytics.md)).
+- **Base de dados (OLTP):** **Azure Cosmos DB for NoSQL** para estado operacional (ver
+  [ADR-003](./adr/adr-003-conversation-knowledge-mining-pipeline.md) e
+  [ADR-006](./adr/adr-006-end-to-end-foundry-event-hub-fabric.md)).
 - **Camada analítica (serving):** expõe os dados para BI **sem impactar** o _store_ transacional:
   - **Recomendado:** _Microsoft Fabric Mirroring_ do Cosmos DB → OneLake → _SQL analytics endpoint_ →
     Power BI em **Direct Lake** (baixa latência, sem ETL).
@@ -135,7 +140,7 @@ já reservamos campos no modelo para reportá-los no mesmo dashboard:
 
 Documento **denormalizado**: resumo da conversa + array `turns[]` (transcrição) para viabilizar o
 _drill-through_ de forma direta. Ver exemplo completo em
-[`sample-data/conversation_sample.json`](./sample-data/conversation_sample.json).
+[`sample-data/output/conversation_sample.json`](./sample-data/output/conversation_sample.json).
 
 Campos principais (ver [dicionário de dados](./sample-data/dicionario-de-dados.md) para a lista completa):
 
@@ -259,20 +264,24 @@ No Power BI o padrão é combinar:
 
 ## 9. Riscos & decisões em aberto
 
-- **Fonte de dados (Cosmos vs DocumentDB):** decidido na [ADR-001](./adr/adr-001-banco-de-dados-analytics.md).
+- **Persistência de destino:** Cosmos DB para estado operacional conforme
+  [ADR-003](./adr/adr-003-conversation-knowledge-mining-pipeline.md), e Eventhouse/OneLake para
+  analytics conforme [ADR-004](./adr/adr-004-real-time-metrics-event-hubs-fabric.md).
 - **PII em transcrições:** exige mascaramento + RLS antes de expor a página de detalhe amplamente.
 - **CSAT assíncrono:** taxa de resposta baixa é comum; reportar sempre `Taxa de Resposta CSAT %`.
 - **"Retenção bruta" vs "líquida":** o escopo pede a **bruta** (sem descontar recontatos). Deixar
   claro na definição do KPI para evitar interpretação equivocada.
-- **Ambiente de nuvem:** o vendor pode ser AWS-native (a KB usa `s3_faq_integration`). A ADR trata
-  esse ponto na comparação.
+- **Ambiente de nuvem:** o vendor pode ser AWS-native (a KB usa `s3_faq_integration`).
+  A integração e os limites de responsabilidade são tratados na
+  [ADR-006](./adr/adr-006-end-to-end-foundry-event-hub-fabric.md).
 
 ## 10. Artefatos deste plano
 
 | Artefato | Caminho |
 |---|---|
 | Este plano | `docs/plano-telemetria-analytics.md` |
-| ADR — base de dados | `docs/adr/adr-001-banco-de-dados-analytics.md` |
+| Índice de ADRs | `docs/adr/README.md` |
+| Roadmap de implementação | `docs/adr/implementation-roadmap.md` |
 | Skills PBI + prompts | `docs/powerbi-prompts.md` |
 | Dicionário de dados | `docs/sample-data/dicionario-de-dados.md` |
 | Gerador de dados sintéticos | `docs/sample-data/gerar_dados_sinteticos.py` |

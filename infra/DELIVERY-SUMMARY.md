@@ -2,7 +2,7 @@
 
 ## ✅ Resumo Executivo
 
-Foi gerado o **Infrastructure as Code (IaC) completo** e toda a **documentação técnica** necessária para implementar o **Plano B** da arquitetura de analytics do agente de voz, conforme especificado em [ADR-002](docs/adr/adr-002-ingestao-fabric-rti-eventhouse.md).
+Foi gerado o **Infrastructure as Code (IaC) completo** e toda a **documentação técnica** necessária para implementar o **Plano B** da arquitetura de analytics do agente de voz, agora preservado na [ADR-004](../docs/adr/adr-004-real-time-metrics-event-hubs-fabric.md).
 
 ### Arquitetura Implementada
 
@@ -146,7 +146,7 @@ Voice Agent → Azure Event Hubs → Fabric Eventstream → Eventhouse (KQL) →
 
 ## 🎯 As 9 Métricas (Dashboard)
 
-Todas as métricas estão **documentadas com fórmulas DAX prontas** em [`powerbi-configuration.md`](infra/docs/powerbi-configuration.md):
+Todas as métricas estão **documentadas com fórmulas DAX prontas** em [`powerbi-configuration.md`](docs/powerbi-configuration.md):
 
 | # | Métrica | Tipo | Fórmula Pronta |
 |---|---------|------|----------------|
@@ -187,7 +187,7 @@ terraform apply
 
 ### Passo 2: Configurar Fabric
 
-Siga o guia detalhado: [`docs/fabric-configuration.md`](infra/docs/fabric-configuration.md)
+Siga o guia detalhado: [`docs/fabric-configuration.md`](docs/fabric-configuration.md)
 
 1. Criar **Eventstream** conectado ao Event Hub
 2. Criar **Eventhouse** (KQL Database)
@@ -196,7 +196,7 @@ Siga o guia detalhado: [`docs/fabric-configuration.md`](infra/docs/fabric-config
 
 ### Passo 3: Implementar Envio no Agente
 
-Siga o schema: [`docs/event-hub-message-format.md`](infra/docs/event-hub-message-format.md)
+Siga o schema: [`docs/event-hub-message-format.md`](docs/event-hub-message-format.md)
 
 Exemplo Node.js:
 ```javascript
@@ -220,7 +220,7 @@ await producer.sendBatch([{
 
 ### Passo 4: Criar Dashboards Power BI
 
-Siga o guia: [`docs/powerbi-configuration.md`](infra/docs/powerbi-configuration.md)
+Siga o guia: [`docs/powerbi-configuration.md`](docs/powerbi-configuration.md)
 
 1. Conectar ao Eventhouse via **Direct Lake**
 2. Criar relacionamentos
@@ -279,7 +279,7 @@ Após executar o IaC, você receberá:
 - Power BI Premium (P1): ~$4,995/mês
 - **Total**: ~$6,750/mês
 
-> Detalhes em [`README.md`](infra/README.md#-estimativa-de-custos)
+> Detalhes em [`README.md`](README.md#-estimativa-de-custos)
 
 ---
 
@@ -296,7 +296,7 @@ Após executar o IaC, você receberá:
 - [ ] ⏭️ **Dashboards** criados
 - [ ] ⏭️ **Publicado** e compartilhado
 
-**Próxima Ação**: Configurar Fabric Eventstream (seguir [`fabric-configuration.md`](infra/docs/fabric-configuration.md))
+**Próxima Ação**: Configurar Fabric Eventstream (seguir [`fabric-configuration.md`](docs/fabric-configuration.md))
 
 ---
 
@@ -304,12 +304,12 @@ Após executar o IaC, você receberá:
 
 | Documento | Propósito | Tamanho |
 |-----------|-----------|---------|
-| [`README.md`](infra/README.md) | Overview e quick start | 11.6 KB |
-| [`event-hub-message-format.md`](infra/docs/event-hub-message-format.md) | Schema JSON completo | 15.4 KB |
-| [`fabric-configuration.md`](infra/docs/fabric-configuration.md) | Setup Eventstream/Eventhouse | 15.9 KB |
-| [`powerbi-configuration.md`](infra/docs/powerbi-configuration.md) | Dashboards + DAX | 15.9 KB |
-| [`architecture-diagram.md`](infra/docs/architecture-diagram.md) | Diagramas Mermaid | 12.2 KB |
-| [`terraform/README.md`](infra/terraform/README.md) | Guia Terraform | 6.2 KB |
+| [`README.md`](README.md) | Overview e quick start | 11.6 KB |
+| [`event-hub-message-format.md`](docs/event-hub-message-format.md) | Schema JSON completo | 15.4 KB |
+| [`fabric-configuration.md`](docs/fabric-configuration.md) | Setup Eventstream/Eventhouse | 15.9 KB |
+| [`powerbi-configuration.md`](docs/powerbi-configuration.md) | Dashboards + DAX | 15.9 KB |
+| [`architecture-diagram.md`](docs/architecture-diagram.md) | Diagramas Mermaid | 12.2 KB |
+| [`terraform/README.md`](terraform/README.md) | Guia Terraform | 6.2 KB |
 
 **Total**: ~77 KB de documentação técnica completa
 

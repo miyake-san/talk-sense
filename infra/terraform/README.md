@@ -8,7 +8,7 @@ Agent → Event Hubs → Fabric Eventstream → Eventhouse → Power BI
 
 ## Architecture
 
-Based on [ADR-002](../../docs/adr/adr-002-ingestao-fabric-rti-eventhouse.md), this infrastructure implements the Fabric Real-Time Intelligence (RTI) ingestion pattern.
+Based on [ADR-004](../../docs/adr/adr-004-real-time-metrics-event-hubs-fabric.md), this infrastructure implements the Fabric Real-Time Intelligence (RTI) ingestion pattern.
 
 ### Components Deployed
 
@@ -214,8 +214,8 @@ terraform destroy -target=azurerm_eventhub.telemetry
 ## Related Documentation
 
 - [Main Telemetry Plan](../../docs/plano-telemetria-analytics.md)
-- [ADR-001: Database Choice](../../docs/adr/adr-001-banco-de-dados-analytics.md)
-- [ADR-002: Fabric RTI Ingestion](../../docs/adr/adr-002-ingestao-fabric-rti-eventhouse.md)
+- [Architecture Decision Records](../../docs/adr/README.md)
+- [ADR-004: Event Hubs and Fabric Metrics](../../docs/adr/adr-004-real-time-metrics-event-hubs-fabric.md)
 - [Event Hub Message Format](../docs/event-hub-message-format.md)
 - [Power BI Configuration](../../docs/powerbi-prompts.md)
 

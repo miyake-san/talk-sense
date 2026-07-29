@@ -415,12 +415,12 @@ graph LR
 
 - [x] **Particionamento** por `conversationId` (ordem preservada)
 - [x] **Consumer Groups** dedicados (Fabric, Monitoring)
-- [x] **Schema versionamento** via `eventType`
-- [x] **LGPD compliance** (anonimização de IDs, mascaramento de PII)
+- [ ] **Schema versionamento** e compatibilidade conforme ADR-004
+- [ ] **Controles LGPD/GDPR** e aprovação organizacional conforme ADR-007
 - [x] **Retention policies** (Event Hub: 7d, Eventhouse: 365d)
-- [x] **Idempotência** (conversationId único)
+- [ ] **Idempotência** com `eventId` único e deduplicação conforme ADR-004
 - [x] **Observabilidade** (métricas nativas do Azure)
-- [x] **Segurança** (SAS para POC, Managed Identity para produção)
+- [ ] **Segurança de produção** (Managed Identity, rede privada, Key Vault e auditoria)
 
 ### ⏭️ Próximas Otimizações (Produção)
 
