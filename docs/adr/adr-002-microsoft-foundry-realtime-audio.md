@@ -130,7 +130,7 @@ Evaluation must use scripted calls and human listening tests across supported la
 - Keep the current Event Hubs schema available during migration, then emit the versioned envelope in ADR-004 from the session backend.
 - Start with a browser-only WebRTC thin slice: consent, one read-only knowledge tool, transcript finalization, interruption, and text fallback.
 - Add a server controller only for controls that cannot safely live in the client. Avoid routing all browser audio through the application without a measured security or integration need.
-- Use the current generally available `/openai/v1` API shape and pin an explicit supported realtime model deployment. Do not copy retired preview endpoint formats from samples.
+- Confirm the current generally available API path and supported realtime model in the linked WebRTC, WebSocket, and SIP documentation at implementation time. Do not copy retired preview endpoint formats from samples.
 - Run a SIP proof of concept with the chosen PBX/contact-center vendor covering codecs, DTMF, inbound validation, transfer, recording, queue context, failover, and regional routing.
 - Keep voice recordings in a restricted Blob/ADLS account and send only a storage reference to the after-call pipeline.
 
