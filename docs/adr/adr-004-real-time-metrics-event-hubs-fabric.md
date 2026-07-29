@@ -116,7 +116,7 @@ Each typed table retains `eventId`, `schemaVersion`, `tenantId`, `conversationId
 | Escalation rate | Conversations with requested and completed handoff reported separately; divide by the same eligible population |
 | Average handle time | End minus start for completed contacts, segmented into automated time, queue wait, and human time where available |
 | Sentiment | Customer sentiment distribution and trend with model/version and confidence; never compare incompatible model versions without calibration |
-| Satisfaction proxy | A clearly labeled composite from sentiment, outcome, repeat-contact, and CSAT. It must not be called NPS; actual NPS requires the standard survey question and calculation |
+| Satisfaction proxy | A clearly labeled composite from sentiment, outcome, repeat-contact, and CSAT. Rename the current CSAT-derived measure to `SatisfactionProxy`; it must not be called NPS because actual NPS requires the standard survey question and calculation |
 | Policy findings | Candidate and human-confirmed findings per policy/severity; confirmed violation rate excludes pending review |
 | Agent/tool behavior | Invocations, tool calls per conversation, selection/input validity, authorization denial, success, timeout, retry, and latency |
 | Model usage | Supported text/audio input and output units, cost allocation tags, cache use, throttling, and quota saturation |

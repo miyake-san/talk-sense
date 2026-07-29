@@ -101,7 +101,8 @@ TalkSense is currently a documented analytics/IaC reference implementation:
 - [ ] **Issue: Extend Eventhouse schemas and update policies** — Add idempotent typed tables, deduplication, correction/replay semantics, retention, and version-aware parsing.
 - [ ] **Issue: Configure and automate Fabric Eventstream** — Implement source identity/networking, routing, invalid-event handling, destination monitoring, and environment promotion.
 - [ ] **Issue: Build realtime KQL metrics and alerts** — Add certified latency, quality, containment, escalation, handle-time, policy, tool, usage, and error functions.
-- [ ] **Issue: Extend the Power BI semantic model** — Add conformed dimensions, historical metrics, definition versions, RLS/OLS, freshness disclosure, and report changes; rename the current CSAT-derived `NPS` measure to a satisfaction proxy unless the standard NPS survey question is collected.
+- [ ] **Issue: Extend the Power BI semantic model** — Add conformed dimensions, historical metrics, definition versions, RLS/OLS, freshness disclosure, and report changes.
+- [ ] **Issue: Rename or remove the NPS measure** — Rename the current CSAT-derived `NPS` measure to `SatisfactionProxy` unless the standard NPS survey question is collected.
 - [ ] **Issue: Reconcile operational and analytical counts** — Compare source sessions, Event Hubs, Eventstream, Eventhouse, OneLake, and Power BI totals under duplicate/late/replay tests.
 - [ ] **Issue: Load-test the streaming path** — Validate partitions, throughput, lag, Eventhouse capacity/cache, OneLake latency, query performance, and cost.
 
