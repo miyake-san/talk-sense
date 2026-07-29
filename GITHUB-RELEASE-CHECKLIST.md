@@ -32,15 +32,16 @@
   - Exemplos anonimizados
 
 ### Architecture Decision Records (ADRs)
-- [x] ✅ **docs/adr/adr-001-banco-de-dados-analytics.md**
-  - Projeto: TalkSense adicionado
-  - Status: Accepted (implementado)
-  - Contexto genérico
-  
-- [x] ✅ **docs/adr/adr-002-ingestao-fabric-rti-eventhouse.md**
-  - Projeto: TalkSense adicionado
-  - Status: Accepted (Plano B)
-  - Compliance: LGPD/GDPR
+- [x] ✅ **docs/adr/README.md**
+  - Índice e status das sete decisões propostas
+  - Migração dos identificadores ADR-001 e ADR-002 documentada
+
+- [x] ✅ **docs/adr/adr-001-...md a adr-007-...md**
+  - Foundry, voz, conversation mining, Event Hubs/Fabric, ontologia, arquitetura ponta a ponta e segurança
+  - Status: Proposed
+
+- [x] ✅ **docs/adr/implementation-roadmap.md**
+  - Premissas, fases e checklist de issues de implementação
 
 ### Infrastructure as Code
 - [x] ✅ **infra/bicep/** — Azure Bicep templates

@@ -2,7 +2,7 @@
 
 ## ✅ Resumo Executivo
 
-Foi gerado o **Infrastructure as Code (IaC) completo** e toda a **documentação técnica** necessária para implementar o **Plano B** da arquitetura de analytics do agente de voz, conforme especificado em [ADR-002](docs/adr/adr-002-ingestao-fabric-rti-eventhouse.md).
+Foi gerado o **Infrastructure as Code (IaC) completo** e toda a **documentação técnica** necessária para implementar o **Plano B** da arquitetura de analytics do agente de voz, agora preservado na [ADR-004](../docs/adr/adr-004-real-time-metrics-event-hubs-fabric.md).
 
 ### Arquitetura Implementada
 

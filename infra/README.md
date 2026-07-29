@@ -4,7 +4,7 @@ Infrastructure and documentation for the **Plan B** architecture of Voice Agent 
 
 ## 📋 Visão Geral
 
-Este diretório contém toda a infraestrutura como código (IaC) e documentação necessária para implementar o **Plano B** de telemetria e analytics do agente de voz, conforme definido em [ADR-002](../../docs/adr/adr-002-ingestao-fabric-rti-eventhouse.md).
+Este diretório contém toda a infraestrutura como código (IaC) e documentação necessária para implementar o **Plano B** de telemetria e analytics do agente de voz, preservado e ampliado na [ADR-004](../docs/adr/adr-004-real-time-metrics-event-hubs-fabric.md) e na [ADR-006](../docs/adr/adr-006-end-to-end-foundry-event-hub-fabric.md).
 
 ### Arquitetura
 
@@ -254,10 +254,10 @@ az monitor metrics list \
 
 ### Documentação do Projeto
 
-- [Plano Principal de Telemetria](../../docs/plano-telemetria-analytics.md)
-- [ADR-001: Escolha de Banco de Dados](../../docs/adr/adr-001-banco-de-dados-analytics.md)
-- [ADR-002: Ingestão via Fabric RTI](../../docs/adr/adr-002-ingestao-fabric-rti-eventhouse.md)
-- [Prompts Power BI](../../docs/powerbi-prompts.md)
+- [Plano Principal de Telemetria](../docs/plano-telemetria-analytics.md)
+- [Índice de ADRs](../docs/adr/README.md)
+- [ADR-004: Métricas em tempo real com Event Hubs e Fabric](../docs/adr/adr-004-real-time-metrics-event-hubs-fabric.md)
+- [Prompts Power BI](../docs/powerbi-prompts.md)
 
 ---
 

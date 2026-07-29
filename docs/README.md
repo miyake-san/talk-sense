@@ -8,12 +8,12 @@ construir o **dashboard no Power BI** (visão geral + drill-downs + detalhe da c
 | Documento | Descrição |
 |---|---|
 | [`plano-telemetria-analytics.md`](./plano-telemetria-analytics.md) | **Plano principal**: arquitetura, esquema de telemetria, definição/fórmula das 9 métricas, modelo de dados Cosmos DB, star schema e páginas do dashboard com drill-through. |
-| [`adr/adr-001-banco-de-dados-analytics.md`](./adr/adr-001-banco-de-dados-analytics.md) | **ADR-001**: escolha da base de dados (Azure Cosmos DB vs Amazon DocumentDB) para uso com Power BI. |
-| [`adr/adr-002-ingestao-fabric-rti-eventhouse.md`](./adr/adr-002-ingestao-fabric-rti-eventhouse.md) | **ADR-002**: viabilidade de usar Fabric Real-Time Intelligence (Eventstream/Eventhouse) na ingestão/analytics vs. Event Hubs + Cosmos DB. |
-| [`diagrams/`](./diagrams/) | Diagramas de arquitetura editáveis (**draw.io**) das 3 opções da ADR-002 (Eventstream→Eventhouse; Event Hubs→Eventstream→Eventhouse; Eventhouse direto). |
+| [`adr/README.md`](./adr/README.md) | **Índice de ADRs**: decisões propostas para Foundry, voz, knowledge mining, Event Hubs/Fabric, ontologia, arquitetura ponta a ponta e segurança. |
+| [`adr/implementation-roadmap.md`](./adr/implementation-roadmap.md) | Roadmap faseado com premissas e tarefas de implementação em formato de checklist de issues. |
+| [`diagrams/`](./diagrams/) | Diagramas de arquitetura editáveis (**draw.io**) das opções originais de ingestão analítica. |
 | [`powerbi-prompts.md`](./powerbi-prompts.md) | Avaliação das **skills de Power BI via código** + **prompts prontos** (modelagem, DAX, layout, validação). |
 | [`sample-data/dicionario-de-dados.md`](./sample-data/dicionario-de-dados.md) | **Dicionário de dados** — todas as colunas que o Power BI precisa. |
-| [`sample-data/gerar_dados_sinteticos.py`](./sample-data/gerar_dados_sinteticos.py) | Gerador de **dados sintéticos** (somente teste; sem dados reais). |
+| [`sample-data/gerar_dados_sinteticos_talksense.py`](./sample-data/gerar_dados_sinteticos_talksense.py) | Gerador de **dados sintéticos** (somente teste; sem dados reais). |
 | [`sample-data/output/`](./sample-data/output/) | Amostras geradas: `conversations.csv`, `turns.csv`, `events.csv`, `csat.csv`, `dim_data.csv`, `conversation_sample.json`. |
 
 ## As 9 métricas do escopo (resumo)

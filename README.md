@@ -24,7 +24,7 @@
 - **9 Core Metrics** — Retention, latency, overflow, errors, CSAT
 - **Real-time Analytics** — Sub-minute latency from event to dashboard
 - **Modern Architecture** — Event Hub → Fabric Eventstream → Eventhouse → Power BI
-- **LGPD/GDPR Compliant** — PII anonymization and data masking
+- **Privacy-aware design** — Pseudonymization and masking guidance; production controls are proposed in ADR-007
 - **Power BI Dashboards** — Overview, drill-through, error analysis
 - **IaC Ready** — Bicep and Terraform templates included
 - **Synthetic Data Generator** — Mock environment for testing
@@ -163,8 +163,15 @@ talksense/
 │   │   ├── gerar_dados_sinteticos_talksense.py  # Python generator
 │   │   └── output/                    # Generated CSVs + JSON
 │   └── adr/                           # Architecture decisions
-│       ├── adr-001-banco-de-dados-analytics.md
-│       └── adr-002-ingestao-fabric-rti-eventhouse.md
+│       ├── README.md                   # ADR index and status
+│       ├── adr-001-...md               # Foundry agent architecture
+│       ├── adr-002-...md               # Realtime voice architecture
+│       ├── adr-003-...md               # Conversation knowledge mining
+│       ├── adr-004-...md               # Event Hubs and Fabric metrics
+│       ├── adr-005-...md               # Fabric ontology and Data Agents
+│       ├── adr-006-...md               # End-to-end hybrid architecture
+│       ├── adr-007-...md               # Security and Responsible AI
+│       └── implementation-roadmap.md   # Sequenced follow-up issues
 ├── .gitignore                         # Git exclusions
 └── README.md                          # This file
 ```
@@ -214,14 +221,15 @@ TalkSense uses 4 event types:
 
 ## Security & Compliance
 
-### LGPD/GDPR Features
+### Privacy and Security Design
 
-- ✅ **Customer ID Anonymization** — SHA256 hashing
-- ✅ **PII Masking** — `userUtterance` masked/removed
-- ✅ **Data Retention** — Configurable TTL policies
-- ✅ **Row-Level Security** — Power BI RLS
-- ✅ **Private Endpoints** — Production template included
-- ✅ **Managed Identity** — No SAS keys in production
+- **Customer pseudonymization** — HMAC/tokenization is recommended; direct identifiers stay in the source system
+- **PII minimization** — `userUtterance` should be redacted or omitted before analytics ingestion
+- **Retention** — Event and conversation retention must be configured by data class and purpose
+- **Analytics authorization** — Power BI RLS is one control and does not secure every source
+- **Production hardening** — Private networking, managed identity, Key Vault, audit, consent, and deletion remain implementation work
+
+See [ADR-007](docs/adr/adr-007-security-privacy-responsible-ai.md). This reference implementation does not by itself establish LGPD/GDPR compliance.
 
 ### Production Security Checklist
 
@@ -265,8 +273,8 @@ TalkSense uses 4 event types:
 | [Architecture Diagrams](infra/docs/architecture-diagram.md) | Mermaid diagrams | 12 KB |
 | [Power BI Project (PBIP)](powerbi/README.md) | Semantic model + DAX measures + starter report | — |
 | [Event Hub Simulator](mock/README.md) | Fabric notebook for POC event simulation | — |
-| [ADR-001](docs/adr/adr-001-banco-de-dados-analytics.md) | Database choice decision | 6 KB |
-| [ADR-002](docs/adr/adr-002-ingestao-fabric-rti-eventhouse.md) | Fabric RTI ingestion decision | 11 KB |
+| [Architecture Decision Records](docs/adr/README.md) | Microsoft Foundry, voice, mining, Fabric, and security target decisions | — |
+| [Implementation Roadmap](docs/adr/implementation-roadmap.md) | Sequenced GitHub-issue checklist for the target architecture | — |
 
 ---
 
