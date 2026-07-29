@@ -18,7 +18,7 @@
 ### Documentação Técnica
 - [x] ✅ **docs/plano-telemetria-analytics.md** — Atualizado para TalkSense
   - Título: "TalkSense (Voice Agent Analytics)"
-  - Status: Production-Ready
+  - Status: referência analítica implementada; arquitetura de destino proposta
   - Licença: MIT
   - Sem referências a arquivos confidenciais
   
@@ -86,7 +86,7 @@ Estes arquivos **NÃO serão enviados ao GitHub**:
 - [x] ✅ "PF Digital" → "Premium" / "Standard" / "VIP"
 - [x] ✅ "CX_CRL_Geral_Investimentos" → "atendimento_principal"
 - [x] ✅ "Investimentos" → Contexto genérico
-- [x] ✅ "POC/MVP" → "Production-Ready"
+- [x] ✅ Terminologia de maturidade revisada; produção depende dos controles do roadmap
 - [x] ✅ Arquivos confidenciais → Referências removidas
 
 ### Dados Sintéticos
@@ -94,7 +94,7 @@ Estes arquivos **NÃO serão enviados ao GitHub**:
 - [x] ✅ Transcrições mascaradas ([MASKED])
 - [x] ✅ Produtos genéricos
 - [x] ✅ Nomes de instituições genéricos
-- [x] ✅ Compliance LGPD/GDPR
+- [x] ✅ Dados sintéticos sem PII real; conformidade de produção não avaliada
 
 ---
 
@@ -181,7 +181,7 @@ git push origin v1.0.0
 - [x] .gitignore configurado
 - [x] Arquivos sensíveis protegidos
 - [x] Anonimização completa
-- [x] Compliance LGPD/GDPR
+- [ ] Controles e aprovação LGPD/GDPR de produção conforme ADR-007
 - [x] SHA256 para IDs
 - [x] PII mascarado
 
@@ -196,13 +196,13 @@ git push origin v1.0.0
 
 ## 🎉 Status Final
 
-**✅ PROJETO 100% PRONTO PARA GITHUB**
+**✅ REFERÊNCIA ANALÍTICA PRONTA PARA GITHUB; ARQUITETURA DE DESTINO PROPOSTA**
 
 - ✅ Anonimização completa
 - ✅ Documentação atualizada
-- ✅ IaC production-ready
+- ✅ IaC de referência para Event Hubs
 - ✅ Dados sintéticos gerados
-- ✅ Compliance LGPD/GDPR
+- ⏳ Compliance de produção depende dos controles e aprovações da ADR-007
 - ✅ Open-source ready
 
 ---

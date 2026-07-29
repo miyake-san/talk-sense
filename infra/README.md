@@ -132,7 +132,7 @@ infra/
 
 ## 📊 As 9 Métricas (Dashboard)
 
-Conforme [`plano-telemetria-analytics.md`](../../docs/plano-telemetria-analytics.md):
+Conforme [`plano-telemetria-analytics.md`](../docs/plano-telemetria-analytics.md):
 
 | # | Métrica | Descrição | Fórmula DAX |
 |---|---------|-----------|-------------|

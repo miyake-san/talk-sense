@@ -140,7 +140,7 @@ já reservamos campos no modelo para reportá-los no mesmo dashboard:
 
 Documento **denormalizado**: resumo da conversa + array `turns[]` (transcrição) para viabilizar o
 _drill-through_ de forma direta. Ver exemplo completo em
-[`sample-data/conversation_sample.json`](./sample-data/conversation_sample.json).
+[`sample-data/output/conversation_sample.json`](./sample-data/output/conversation_sample.json).
 
 Campos principais (ver [dicionário de dados](./sample-data/dicionario-de-dados.md) para a lista completa):
 

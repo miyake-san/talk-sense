@@ -302,7 +302,7 @@ Copy measures from \`docs/powerbi-configuration.md\` → Section "Parte 3":
 
 ## 🔒 Phase 6: Security & Compliance
 
-- [ ] Verify PII masking in \`userUtterance\` field
+- [ ] Verify PII masking in userUtterance field
 - [ ] Apply RLS in Power BI (if needed)
 - [ ] Review data retention policies (Event Hub, Eventhouse)
 - [ ] Configure Private Endpoints (production only)

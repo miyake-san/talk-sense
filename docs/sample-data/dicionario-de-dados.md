@@ -5,8 +5,10 @@ Serve para: (a) o **contrato de telemetria** com o fornecedor do agente de voz e
 modelagem no Power BI (quais colunas cada visual precisa).
 
 > ⚠️ **Dados 100% sintéticos e anonimizados**, gerados por [`gerar_dados_sinteticos_talksense.py`](./gerar_dados_sinteticos_talksense.py).
-> Nenhum dado real de cliente. Totalmente compatível com LGPD/GDPR. `customerIdAnon` usa hash SHA256 — 
-> nunca dados pessoais em claro. Projeto open-source: **TalkSense** (Compreensão inteligente das chamadas).
+> Nenhum dado real de cliente. `customerIdAnon` usa hash SHA256 somente nos dados sintéticos;
+> identificadores reais exigem a pseudonimização e os controles da [ADR-007](../adr/adr-007-security-privacy-responsible-ai.md).
+> A conformidade de produção depende de implementação e revisão organizacional. Projeto open-source:
+> **TalkSense** (Compreensão inteligente das chamadas).
 
 ## Mapa arquivo → tabela Power BI
 

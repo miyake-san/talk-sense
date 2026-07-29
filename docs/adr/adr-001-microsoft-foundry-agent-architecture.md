@@ -136,10 +136,10 @@ Maintain offline, predeployment, canary, and sampled production evaluations. Eva
 Primary references:
 
 - [Customer Chatbot Solution Accelerator](https://github.com/microsoft/customer-chatbot-solution-accelerator)
-- [Microsoft Foundry Agent Service overview](https://learn.microsoft.com/azure/ai-foundry/agents/overview)
+- [Microsoft Foundry Agent Service overview](https://learn.microsoft.com/azure/foundry/agents/overview)
 - [Microsoft Agent Framework overview](https://learn.microsoft.com/agent-framework/overview/agent-framework-overview)
-- [Tool best practices for Foundry Agent Service](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/tool-best-practice)
-- [Foundry IQ overview](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/what-is-foundry-iq)
+- [Tool best practices for Foundry Agent Service](https://learn.microsoft.com/azure/foundry/agents/concepts/tool-best-practice)
+- [Foundry IQ overview](https://learn.microsoft.com/azure/foundry/agents/concepts/what-is-foundry-iq)
 
 ## Open Questions
 

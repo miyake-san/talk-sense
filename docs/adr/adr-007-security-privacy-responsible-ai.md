@@ -190,6 +190,8 @@ Security and Responsible-AI release gates include:
 
 Use offline evaluation before every model/prompt/tool/knowledge release, red-team high-risk paths, canary deployments, sampled continuous evaluation, drift monitoring, and periodic human review. Monitor guardrail interventions, denied tools, anomalous access/export, privileged trace access, prompt attacks, PII detections, deletion backlog, and safety-triggered handoffs without storing the prohibited content itself.
 
+Safety monitoring must have documented alert thresholds, an on-call owner, a stop/rollback authority, and a path to immediate human review.
+
 ## Implementation Notes
 
 1. Remove unconditional compliance claims and publish the approved purposes, limitations, and transparency notice.
@@ -204,13 +206,13 @@ Use offline evaluation before every model/prompt/tool/knowledge release, red-tea
 
 Primary references:
 
-- [Microsoft Foundry guardrails overview](https://learn.microsoft.com/azure/ai-foundry/guardrails/guardrails-overview)
-- [Restrict access to sensitive Microsoft Foundry trace content](https://learn.microsoft.com/azure/ai-foundry/observability/how-to/traces-sensitive-content)
+- [Microsoft Foundry guardrails overview](https://learn.microsoft.com/azure/foundry/guardrails/guardrails-overview)
+- [Restrict access to sensitive Microsoft Foundry trace content](https://learn.microsoft.com/azure/foundry/observability/how-to/traces-sensitive-content)
 - [Conversation PII redaction](https://learn.microsoft.com/azure/ai-services/language-service/personally-identifiable-information/conversation-pii-overview)
 - [Azure Communication Services call-recording responsibilities](https://learn.microsoft.com/azure/communication-services/concepts/voice-video-calling/call-recording)
-- [Private networking for Foundry Agent Service](https://learn.microsoft.com/azure/ai-foundry/agents/how-to/virtual-networks)
+- [Private networking for Foundry Agent Service](https://learn.microsoft.com/azure/foundry/agents/how-to/virtual-networks)
 - [Azure Cosmos DB security](https://learn.microsoft.com/azure/cosmos-db/security)
-- [Microsoft Responsible AI Standard](https://www.microsoft.com/ai/responsible-ai)
+- [Microsoft Responsible AI](https://www.microsoft.com/ai/responsible-ai)
 
 ## Open Questions
 

@@ -31,7 +31,7 @@ Retain and extend the current event-driven architecture:
 
 ### Event envelope
 
-Adopt a CloudEvents-compatible JSON envelope while supporting a transition from the existing `eventType` payloads:
+Adopt a CloudEvents 1.0 structured JSON envelope while supporting a transition from the existing `eventType` payloads. Custom CloudEvents extension attributes use lowercase names; Eventhouse normalization maps them to the repository's camel-case column convention:
 
 ```json
 {
@@ -42,22 +42,19 @@ Adopt a CloudEvents-compatible JSON envelope while supporting a transition from 
   "subject": "/conversations/conv_01JZQ8",
   "time": "2026-07-29T15:31:33.189Z",
   "datacontenttype": "application/json",
-  "dataschema": "https://schemas.example/talksense/turn-completed/v2",
-  "tenantId": "tenant_01",
-  "conversationId": "conv_01JZQ8",
-  "sessionId": "sess_01JZQ7",
-  "correlationId": "corr_01JZQ7",
+  "dataschema": "urn:talksense:schema:turn-completed:2",
+  "schemaversion": "2.0",
+  "tenantid": "tenant_01",
+  "conversationid": "conv_01JZQ8",
+  "sessionid": "sess_01JZQ7",
+  "correlationid": "corr_01JZQ7",
   "traceparent": "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
   "sequence": 17,
-  "privacy": {
-    "classification": "pseudonymous",
-    "redactionPolicy": "conversation-pii-v2"
-  },
-  "producer": {
-    "name": "session-api",
-    "version": "2.3.0",
-    "region": "brazilsouth"
-  },
+  "privacyclass": "pseudonymous",
+  "redactionpolicy": "conversation-pii-v2",
+  "producername": "session-api",
+  "producerversion": "2.3.0",
+  "producerregion": "brazilsouth",
   "data": {
     "turnId": "turn_17",
     "speaker": "assistant",

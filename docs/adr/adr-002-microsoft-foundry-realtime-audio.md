@@ -58,7 +58,7 @@ Use server voice activity detection initially, with parameters tuned per locale 
 
 Cancellation and truncation are both required: cancellation stops generation, while truncation keeps server conversation state consistent with what the caller actually heard. Clients must deduplicate event IDs and tolerate cancellation races.
 
-### Degradation and handoff
+### Degradation and human handoff
 
 The voice module uses the following ordered fallback:
 
@@ -136,9 +136,9 @@ Evaluation must use scripted calls and human listening tests across supported la
 
 Primary references:
 
-- [Use the GPT Realtime API via WebRTC](https://learn.microsoft.com/azure/ai-foundry/openai/how-to/realtime-audio-webrtc)
-- [Use the GPT Realtime API via WebSocket](https://learn.microsoft.com/azure/ai-foundry/openai/how-to/realtime-audio-websockets)
-- [Use the GPT Realtime API via SIP](https://learn.microsoft.com/azure/ai-foundry/openai/how-to/realtime-audio-sip)
+- [Use the GPT Realtime API via WebRTC](https://learn.microsoft.com/azure/foundry/openai/how-to/realtime-audio-webrtc)
+- [Use the GPT Realtime API via WebSocket](https://learn.microsoft.com/azure/foundry/openai/how-to/realtime-audio-websockets)
+- [Use the GPT Realtime API via SIP](https://learn.microsoft.com/azure/foundry/openai/how-to/realtime-audio-sip)
 - [Azure Communication Services contact-center guidance](https://learn.microsoft.com/azure/communication-services/tutorials/contact-center)
 - [Azure Communication Services call recording](https://learn.microsoft.com/azure/communication-services/concepts/voice-video-calling/call-recording)
 

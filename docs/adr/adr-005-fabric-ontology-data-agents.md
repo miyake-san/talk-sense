@@ -83,7 +83,7 @@ The Business Intelligence Data Agent receives:
 - instructions for temporal comparison, confidence, suppression of small groups, and source citation;
 - ontology binding only after the preview capability passes governance and reliability gates.
 
-Do not attach raw files, unrestricted transcript stores, or more data sources than necessary. Fabric Data Agents support a limited number of sources per agent; source count and current feature support must be revalidated at implementation time.
+Do not attach raw files, unrestricted transcript stores, or more data sources than necessary. As of this ADR date, a Fabric Data Agent can combine up to five supported data sources; that limit and each source's feature status must be revalidated at implementation time.
 
 ### Example questions
 
@@ -188,7 +188,7 @@ Primary references:
 - [Fabric Ontology agent integration](https://learn.microsoft.com/fabric/iq/ontology/concepts-agent-integration)
 - [Fabric Data Agent overview](https://learn.microsoft.com/fabric/data-science/concept-data-agent)
 - [Add data sources to a Fabric Data Agent](https://learn.microsoft.com/fabric/data-science/data-agent-add-datasources)
-- [Fabric Data Agent and Microsoft Purview governance](https://learn.microsoft.com/fabric/data-science/fabric-data-agent-purview-governance)
+- [Fabric Data Agent governance and security](https://learn.microsoft.com/fabric/data-science/concept-data-agent#governance-and-security)
 
 ## Open Questions
 

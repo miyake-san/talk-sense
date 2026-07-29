@@ -247,7 +247,7 @@ Primary references:
 
 - [Customer Chatbot Solution Accelerator](https://github.com/microsoft/customer-chatbot-solution-accelerator)
 - [Conversation Knowledge Mining Solution Accelerator](https://github.com/microsoft/Conversation-Knowledge-Mining-Solution-Accelerator)
-- [Microsoft Foundry Agent Service](https://learn.microsoft.com/azure/ai-foundry/agents/overview)
+- [Microsoft Foundry Agent Service](https://learn.microsoft.com/azure/foundry/agents/overview)
 - [Azure Event Hubs](https://learn.microsoft.com/azure/event-hubs/event-hubs-about)
 - [Microsoft Fabric Real-Time Intelligence](https://learn.microsoft.com/fabric/real-time-intelligence/overview)
 - [Azure Architecture Center: conversational data insights](https://learn.microsoft.com/azure/architecture/ai-ml/idea/unlock-insights-from-conversational-data)

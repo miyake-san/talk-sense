@@ -164,13 +164,13 @@ talksense/
 │   │   └── output/                    # Generated CSVs + JSON
 │   └── adr/                           # Architecture decisions
 │       ├── README.md                   # ADR index and status
-│       ├── adr-001-...md               # Foundry agent architecture
-│       ├── adr-002-...md               # Realtime voice architecture
-│       ├── adr-003-...md               # Conversation knowledge mining
-│       ├── adr-004-...md               # Event Hubs and Fabric metrics
-│       ├── adr-005-...md               # Fabric ontology and Data Agents
-│       ├── adr-006-...md               # End-to-end hybrid architecture
-│       ├── adr-007-...md               # Security and Responsible AI
+│       ├── adr-001-microsoft-foundry-agent-architecture.md
+│       ├── adr-002-microsoft-foundry-realtime-audio.md
+│       ├── adr-003-conversation-knowledge-mining-pipeline.md
+│       ├── adr-004-real-time-metrics-event-hubs-fabric.md
+│       ├── adr-005-fabric-ontology-data-agents.md
+│       ├── adr-006-end-to-end-foundry-event-hub-fabric.md
+│       ├── adr-007-security-privacy-responsible-ai.md
 │       └── implementation-roadmap.md   # Sequenced follow-up issues
 ├── .gitignore                         # Git exclusions
 └── README.md                          # This file
@@ -207,7 +207,7 @@ TalkSense uses 4 event types:
   "payload": {
     "turnIndex": 1,
     "userUtterance": "[MASKED]",
-    "agentResponse": "Seu saldo atual é R$ 12.345,67.",
+    "agentResponse": "[MASKED]",
     "intent": "saldo",
     "latencyMs": 1250,
     "sentiment": {"overall": "neutral", "score": 0.52}
