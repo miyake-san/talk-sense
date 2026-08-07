@@ -395,11 +395,13 @@ Isso garante que todos os eventos da mesma conversa vão para a mesma partição
 
 ```javascript
 const { EventHubProducerClient } = require("@azure/event-hubs");
+const { DefaultAzureCredential } = require("@azure/identity");
 
-const connectionString = process.env.EVENTHUB_CONNECTION_STRING;
+// Autenticação keyless via Managed Identity / Entra ID (sem connection string / SAS)
+const fullyQualifiedNamespace = process.env.EVENTHUB_FQDN; // ex.: evhns-....servicebus.windows.net
 const eventHubName = "evh-voiceagent-telemetry";
 
-const producer = new EventHubProducerClient(connectionString, eventHubName);
+const producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, new DefaultAzureCredential());
 
 async function sendTelemetry(telemetryEvent) {
   const batch = await producer.createBatch();
@@ -433,16 +435,19 @@ await sendTelemetry(event);
 
 ```python
 from azure.eventhub import EventHubProducerClient, EventData
+from azure.identity import DefaultAzureCredential
 import json
 import os
 from datetime import datetime, timezone
 
-connection_str = os.getenv("EVENTHUB_CONNECTION_STRING")
+# Autenticação keyless via Managed Identity / Entra ID (sem connection string / SAS)
+fully_qualified_namespace = os.getenv("EVENTHUB_FQDN")  # ex.: evhns-....servicebus.windows.net
 eventhub_name = "evh-voiceagent-telemetry"
 
-producer = EventHubProducerClient.from_connection_string(
-    conn_str=connection_str,
-    eventhub_name=eventhub_name
+producer = EventHubProducerClient(
+    fully_qualified_namespace=fully_qualified_namespace,
+    eventhub_name=eventhub_name,
+    credential=DefaultAzureCredential(),
 )
 
 def send_telemetry(telemetry_event):

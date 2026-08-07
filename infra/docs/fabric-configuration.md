@@ -23,7 +23,7 @@ Este guia detalha como configurar **Fabric Eventstream** e **Eventhouse** para r
 ## Pré-requisitos
 
 1. ✅ **Azure Event Hubs** já implantado (via Bicep/Terraform)
-2. ✅ **Connection String** do Event Hubs (saída do Terraform: `fabric_eventstream_connection_string`)
+2. ✅ **Workspace identity do Fabric** com role **Azure Event Hubs Data Receiver** no Event Hub (auth keyless — SAS desabilitado)
 3. ✅ **Microsoft Fabric capacity** ativa (F SKU)
 4. ✅ **Workspace do Fabric** criado
 5. ✅ **Permissões**:
@@ -54,35 +54,18 @@ Este guia detalha como configurar **Fabric Eventstream** e **Eventhouse** para r
 
 #### 1.3.1 Configurar Conexão
 
-**Opção A: Connection String (Recomendado para POC)**
+> **Autenticação keyless (obrigatório):** o Event Hub tem SAS/local auth **desabilitado** — connection strings não funcionam. Use **Managed Identity / Entra ID**.
 
-```
-Passo 1: Connection String
-- Cole a connection string: 
-  Endpoint=sb://evhns-voiceagent-dev-abc123.servicebus.windows.net/;
-  SharedAccessKeyName=FabricEventstreamPolicy;
-  SharedAccessKey=<key>;
-  EntityPath=evh-voiceagent-telemetry
+**Managed Identity (Entra ID)**
 
-Passo 2: Consumer Group
-- Nome: fabric-eventstream
-
-Passo 3: Data Format
-- Formato: JSON
-- Compression: None
-
-Passo 4: Nome da Source
-- Nome: EventHubsVoiceAgentSource
-```
-
-**Opção B: Managed Identity (Produção)**
-
-1. Crie uma **Managed Identity** no Azure
-2. Atribua role **Azure Event Hubs Data Receiver** no Event Hub
-3. No Eventstream, selecione **Managed Identity** em vez de Connection String
-4. Forneça o namespace do Event Hub: `evhns-voiceagent-prod-xyz.servicebus.windows.net`
+1. Em **Workspace settings → Workspace identity**, habilite a workspace identity e copie seu Object ID.
+2. Passe esse Object ID como `listener_principal_id` (Terraform) ou `listenerPrincipalId` (Bicep); o IaC atribui **Azure Event Hubs Data Receiver** no Event Hub.
+3. No Eventstream, em **Authentication**, selecione **Workspace identity** (não use Connection String / Shared Access Key).
+4. Namespace (FQDN): `evhns-voiceagent-<env>-xxxxxx.servicebus.windows.net` (output `eventhub_namespace_fqdn` / `eventHubNamespaceFqdn`)
 5. Event Hub name: `evh-voiceagent-telemetry`
 6. Consumer group: `fabric-eventstream`
+7. Data Format: `JSON` · Compression: `None`
+8. Nome da Source: `EventHubsVoiceAgentSource`
 
 ### 1.4 Adicionar Transformações (Opcional)
 
@@ -465,7 +448,7 @@ Events
 
 1. ✅ Eventstream está **Running**?
 2. ✅ Consumer group correto (`fabric-eventstream`)?
-3. ✅ Connection string válida?
+3. ✅ Workspace identity habilitada e com role Data Receiver?
 4. ✅ Event Hub tem dados? (verificar no Azure Portal: Metrics → Incoming Messages)
 5. ✅ Tabela de destino existe no Eventhouse?
 6. ✅ Streaming ingestion habilitada na tabela?

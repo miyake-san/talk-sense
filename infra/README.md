@@ -51,7 +51,11 @@ Escolha **Bicep** ou **Terraform**:
 
 ```powershell
 cd bicep
-./deploy.ps1 -Environment dev -Location eastus2
+./deploy.ps1 `
+  -Environment dev `
+  -TenantId 1a828a01-604c-42e6-86dd-a5fcc38a6969 `
+  -SubscriptionId 401f453f-7b92-4e20-9c55-265205a1b26f `
+  -FabricWorkspacePrincipalId <workspace-identity-object-id>
 ```
 
 #### Opção B: Terraform
@@ -79,11 +83,15 @@ Implementar envio de telemetria seguindo [`docs/event-hub-message-format.md`](do
 ```javascript
 // Exemplo Node.js
 const { EventHubProducerClient } = require("@azure/event-hubs");
+const { DefaultAzureCredential } = require("@azure/identity");
 
-const connectionString = "Endpoint=sb://..."; // Output do Terraform
+// Keyless (Managed Identity / Entra ID) — sem connection string / SAS
+const fullyQualifiedNamespace = "evhns-....servicebus.windows.net"; // output eventhub_namespace_fqdn
 const eventHubName = "evh-voiceagent-telemetry";
+const managedIdentityClientId = process.env.AZURE_CLIENT_ID; // output producer identity client ID
 
-const producer = new EventHubProducerClient(connectionString, eventHubName);
+const credential = new DefaultAzureCredential({ managedIdentityClientId });
+const producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, credential);
 
 // Enviar evento
 await producer.sendBatch([{
@@ -159,7 +167,7 @@ Conforme [`plano-telemetria-analytics.md`](../docs/plano-telemetria-analytics.md
 ### Network Security
 
 **POC/Dev**:
-- Event Hub: Public network, SAS authentication
+- Event Hub: Public network, **Managed Identity / Entra ID** (SAS/local auth desabilitado — sem keys)
 
 **Produção**:
 - Event Hub: **Private Endpoint**, **Managed Identity**
@@ -216,7 +224,7 @@ az monitor metrics list \
 
 ### Fabric: Eventstream não ingere
 
-1. Verificar **connection string** (copiar novamente do output do Terraform)
+1. Verificar **autenticação**: a identidade tem a role RBAC (Data Receiver) no Event Hub e usa o FQDN do namespace (output `eventhub_namespace_fqdn`)
 2. Verificar **consumer group**: deve ser `fabric-eventstream`
 3. Logs: Eventstream → Monitoring → Logs
 

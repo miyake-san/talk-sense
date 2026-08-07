@@ -233,11 +233,11 @@ See [ADR-007](docs/adr/adr-007-security-privacy-responsible-ai.md). This referen
 
 ### Production Security Checklist
 
-- [ ] Disable SAS authentication (Event Hub)
+- [x] Disable SAS authentication (Event Hub)
 - [ ] Enable Private Endpoints
 - [ ] Configure Managed Identity
 - [ ] Apply RLS rules in Power BI
-- [ ] Encrypt secrets in Key Vault
+- [x] Remove Event Hubs secrets by using Managed Identity and RBAC
 - [ ] Enable diagnostic logging
 - [ ] Configure NSG rules
 

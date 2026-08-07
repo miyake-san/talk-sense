@@ -21,7 +21,7 @@ Voice Agent → Azure Event Hubs → Fabric Eventstream → Eventhouse (KQL) →
   - Event Hub Namespace (Standard/Premium)
   - Event Hub `evh-voiceagent-telemetry`
   - Consumer Groups (fabric-eventstream, monitoring)
-  - Authorization Policies (Send, Listen, Manage)
+  - RBAC role assignments (Data Sender / Data Receiver / Data Owner) — keyless
   - Diagnostic Settings (template)
 
 - ✅ **`infra/bicep/main.parameters.dev.json`** (628 B)
@@ -30,14 +30,14 @@ Voice Agent → Azure Event Hubs → Fabric Eventstream → Eventhouse (KQL) →
 - ✅ **`infra/bicep/deploy.ps1`** (4.5 KB)
   - Script PowerShell automatizado de deployment
   - Validação de pré-requisitos
-  - Outputs estruturados (connection strings, endpoints)
+  - Outputs estruturados (namespace FQDN, endpoints — sem keys)
 
 #### Terraform (Multi-Cloud)
 - ✅ **`infra/terraform/main.tf`** (10.4 KB)
   - Configuração completa de Event Hubs
   - Resource Group, Namespace, Event Hub, Consumer Groups
-  - Authorization Rules
-  - Outputs sensíveis (connection strings)
+  - RBAC role assignments (keyless)
+  - Outputs (namespace FQDN — sem connection strings)
 
 - ✅ **`infra/terraform/terraform.tfvars`** (578 B)
   - Variáveis de ambiente (dev, staging, prod)
@@ -201,11 +201,12 @@ Siga o schema: [`docs/event-hub-message-format.md`](docs/event-hub-message-forma
 Exemplo Node.js:
 ```javascript
 const { EventHubProducerClient } = require("@azure/event-hubs");
+const { DefaultAzureCredential } = require("@azure/identity");
 
-const connectionString = "<from deployment output>";
+const fullyQualifiedNamespace = "<eventHubNamespaceFqdn do output>";
 const eventHubName = "evh-voiceagent-telemetry";
 
-const producer = new EventHubProducerClient(connectionString, eventHubName);
+const producer = new EventHubProducerClient(fullyQualifiedNamespace, eventHubName, new DefaultAzureCredential());
 
 await producer.sendBatch([{
   body: {
@@ -237,29 +238,28 @@ Após executar o IaC, você receberá:
 {
   "eventHubNamespaceName": "evhns-voiceagent-dev-abc123",
   "eventHubName": "evh-voiceagent-telemetry",
-  "voiceAgentConnectionString": "Endpoint=sb://...;SharedAccessKeyName=VoiceAgentSendPolicy;...",
-  "fabricEventstreamConnectionString": "Endpoint=sb://...;SharedAccessKeyName=FabricEventstreamPolicy;...",
+  "eventHubNamespaceFqdn": "evhns-voiceagent-dev-abc123.servicebus.windows.net",
+  "localAuthDisabled": true,
   "kafkaEndpoint": "evhns-voiceagent-dev-abc123.servicebus.windows.net:9093",
   "consumerGroups": ["fabric-eventstream", "monitoring"]
 }
 ```
 
-**⚠️ IMPORTANTE**: Guardar esses valores de forma segura (Azure Key Vault em produção).
+**⚠️ IMPORTANTE**: A autenticação é keyless (Managed Identity / Entra ID) — não há connection strings para guardar.
 
 ---
 
 ## 🔒 Segurança e LGPD
 
 ### Implementado no IaC
-- ✅ SAS Authentication (POC/Dev)
+- ✅ Autenticação keyless: Managed Identity / Entra ID (SAS/local auth desabilitado)
 - ✅ TLS 1.2 mínimo
 - ✅ Consumer Groups isolados
-- ✅ Authorization Policies com least privilege
+- ✅ RBAC data roles com least privilege (Data Sender / Data Receiver)
 
 ### Documentado para Implementação
 - ✅ Anonimização de IDs de cliente (SHA256)
 - ✅ Mascaramento de PII em transcrições
-- ✅ Managed Identity (produção)
 - ✅ Private Endpoints (produção)
 - ✅ RLS no Power BI
 
@@ -336,7 +336,7 @@ Após executar o IaC, você receberá:
 ### Imediatos
 1. **Revisar documentação** (todos os arquivos em `infra/`)
 2. **Executar deploy**: `.\deploy-planb.ps1 -Environment dev`
-3. **Guardar connection strings** (output do deployment)
+3. **Atribuir as roles RBAC** às managed identities (sender/listener) — sem connection strings
 
 ### Curto Prazo
 4. **Configurar Fabric** (seguir `fabric-configuration.md`)

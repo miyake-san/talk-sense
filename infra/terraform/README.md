@@ -15,7 +15,9 @@ Based on [ADR-004](../../docs/adr/adr-004-real-time-metrics-event-hubs-fabric.md
 1. **Azure Event Hubs Namespace** - Message ingestion layer
 2. **Event Hub (evh-voiceagent-telemetry)** - Telemetry stream
 3. **Consumer Groups** - fabric-eventstream, monitoring
-4. **Authorization Rules** - Send-only, Listen-only, Manage policies
+4. **Producer Managed Identity** - User-assigned identity for the voice agent workload
+5. **RBAC** - Data Sender for the producer and Data Receiver for Fabric
+6. **Observability** - Log Analytics workspace and Event Hubs diagnostics
 
 ### Not Included (Manual Configuration Required)
 
@@ -28,7 +30,7 @@ Based on [ADR-004](../../docs/adr/adr-004-real-time-metrics-event-hubs-fabric.md
 
 - Azure CLI installed and authenticated
 - Terraform >= 1.5.0
-- Appropriate Azure subscription permissions (Contributor or Owner)
+- Permission to create resources and role assignments in the target subscription
 
 ## Quick Start
 
@@ -57,9 +59,8 @@ terraform apply
 # Show all outputs
 terraform output
 
-# Show specific sensitive output
-terraform output -raw voice_agent_connection_string
-terraform output -raw fabric_eventstream_connection_string
+# Show the namespace FQDN for Managed Identity (Entra ID) auth
+terraform output -raw eventhub_namespace_fqdn
 ```
 
 ## Configuration
@@ -76,6 +77,12 @@ message_retention_days   = 7           # 1-7 days
 partition_count          = 4           # 2-32 partitions
 auto_inflate_enabled     = false
 maximum_throughput_units = 0
+
+# Keyless auth (Managed Identity)
+listener_principal_id = ""  # Fabric workspace identity -> Data Receiver
+admin_principal_id    = ""  # optional -> Azure Event Hubs Data Owner
+principal_type        = "ServicePrincipal"
+log_retention_days    = 30
 ```
 
 ## Outputs
@@ -88,8 +95,11 @@ After deployment, the following outputs are available:
 | `eventhub_namespace_name` | Event Hub namespace | No |
 | `eventhub_name` | Event Hub name | No |
 | `kafka_endpoint` | Kafka endpoint | No |
-| `voice_agent_connection_string` | Agent send connection string | Yes |
-| `fabric_eventstream_connection_string` | Fabric listen connection string | Yes |
+| `eventhub_namespace_fqdn` | Namespace FQDN for Managed Identity auth | No |
+| `local_auth_disabled` | Whether SAS/local auth is disabled | No |
+| `producer_identity_client_id` | Client ID for selecting the producer UAMI | No |
+| `producer_identity_principal_id` | Producer identity object ID | No |
+| `log_analytics_workspace_id` | Log Analytics workspace resource ID | No |
 | `consumer_groups` | List of consumer groups | No |
 | `deployment_info` | Full deployment details | No |
 
@@ -102,7 +112,8 @@ After Terraform completes:
 1. Navigate to your Microsoft Fabric workspace
 2. Create a new **Eventstream**
 3. Add source: **Azure Event Hubs**
-   - Use `fabric_eventstream_connection_string` output
+   - Authentication: **Managed Identity / Entra ID** (namespace FQDN from `eventhub_namespace_fqdn`) — SAS is disabled
+   - Enable the Fabric **workspace identity** and assign its object ID to `listener_principal_id`
    - Select consumer group: `fabric-eventstream`
 4. Add destination: **Eventhouse** (create if needed)
 
@@ -115,12 +126,14 @@ After Terraform completes:
 
 ### 3. Configure Voice Agent
 
-1. Get the connection string:
+1. Get the keyless connection settings:
    ```bash
-   terraform output -raw voice_agent_connection_string
+   terraform output -raw eventhub_namespace_fqdn
+   terraform output -raw producer_identity_client_id
    ```
-2. Configure agent to send events to Event Hub
-3. Follow message format in `../docs/event-hub-message-format.md`
+2. Attach the provisioned user-assigned managed identity to the Azure compute resource that hosts the agent
+3. Configure `DefaultAzureCredential` to select that client ID and send events to the namespace FQDN
+4. Follow message format in `../docs/event-hub-message-format.md`
 
 ### 4. Configure Power BI
 
@@ -132,7 +145,7 @@ After Terraform completes:
 
 ### For POC/Development
 
-- SAS authentication enabled (`local_auth_enabled = true`)
+- Keyless auth: Managed Identity / Entra ID (`local_authentication_enabled = false` — SAS disabled)
 - Public network access enabled
 - Standard SKU for cost optimization
 
@@ -142,14 +155,12 @@ Update the following:
 
 ```hcl
 # In main.tf, update these properties:
-local_auth_enabled            = false  # Use Managed Identity
+local_authentication_enabled  = false  # Already default — keyless (Managed Identity)
 public_network_access_enabled = false  # Require Private Endpoint
-zone_redundant                = true   # Enable zone redundancy
 eventhub_sku                  = "Premium"  # For Private Endpoint support
 
 # Add Private Endpoint configuration
 # Add Log Analytics workspace for diagnostics
-# Implement Key Vault for secrets
 # Configure Network Security Group rules
 ```
 

@@ -16,6 +16,6 @@ Validado durante a revisão da infraestrutura: os scripts de deploy (`infra/depl
 
 1. Provisione o Eventstream/Eventhouse: ver [`../infra/docs/fabric-configuration.md`](../infra/docs/fabric-configuration.md).
 2. Importe `talksense_eventhub_simulator.ipynb` em um workspace do Fabric.
-3. Configure `EVENTSTREAM_CONNECTION_STRING` (endpoint "Custom App" do Eventstream) na célula de configuração.
+3. Configure `EVENTHUB_FULLY_QUALIFIED_NAMESPACE` (FQDN do namespace do Event Hub) e `EVENTHUB_NAME` na célula de configuração — autenticação keyless via Managed Identity (`DefaultAzureCredential`), sem connection string.
 4. Execute todas as células — o simulador roda em loop até `MAX_RUNTIME_MINUTES` ou até ser interrompido manualmente.
 5. Valide a chegada dos dados com uma consulta KQL na Eventhouse (exemplo incluso no notebook).

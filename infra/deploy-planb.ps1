@@ -30,9 +30,21 @@ param(
     [Parameter(Mandatory=$false)]
     [ValidateSet('dev', 'staging', 'prod')]
     [string]$Environment = 'dev',
+
+    [Parameter(Mandatory=$false)]
+    [string]$TenantId = '1a828a01-604c-42e6-86dd-a5fcc38a6969',
+
+    [Parameter(Mandatory=$false)]
+    [string]$SubscriptionId = '401f453f-7b92-4e20-9c55-265205a1b26f',
     
     [Parameter(Mandatory=$false)]
     [string]$Location = 'eastus2',
+
+    [Parameter(Mandatory=$false)]
+    [string]$FabricWorkspacePrincipalId = '',
+
+    [Parameter(Mandatory=$false)]
+    [string]$AdminPrincipalId = '',
     
     [Parameter(Mandatory=$false)]
     [switch]$SkipEventHub,
@@ -128,7 +140,14 @@ if (-not $SkipEventHub) {
     $bicepScript = Join-Path $scriptRoot "bicep\deploy.ps1"
     
     if (Test-Path $bicepScript) {
-        & $bicepScript -Environment $Environment -Location $Location -WhatIf:$WhatIf
+        & $bicepScript `
+            -Environment $Environment `
+            -TenantId $TenantId `
+            -SubscriptionId $SubscriptionId `
+            -Location $Location `
+            -FabricWorkspacePrincipalId $FabricWorkspacePrincipalId `
+            -AdminPrincipalId $AdminPrincipalId `
+            -WhatIf:$WhatIf
         
         if ($LASTEXITCODE -ne 0) {
             Write-Host "`n❌ Event Hub deployment failed." -ForegroundColor $ColorError
@@ -161,8 +180,8 @@ $checklistContent = @"
 - [x] Event Hub Namespace deployed
 - [x] Event Hub \`evh-voiceagent-telemetry\` created
 - [x] Consumer groups configured (\`fabric-eventstream\`, \`monitoring\`)
-- [x] Authorization policies created (Send, Listen, Manage)
-- [x] Connection strings generated
+- [x] Local/SAS auth disabled (keyless) — access via Microsoft Entra ID only
+- [x] RBAC role assignments (Data Sender / Data Receiver) for the supplied managed identities
 
 **Outputs saved to**: \`bicep/deployment-outputs-$Environment.json\`
 
@@ -176,7 +195,7 @@ $checklistContent = @"
 - [ ] Navigate to workspace: **VoiceAgentAnalytics**
 - [ ] Create new **Eventstream**: \`VoiceAgentTelemetryStream\`
 - [ ] Add source: **Azure Event Hubs**
-  - [ ] Connection string: (from \`deployment-outputs-$Environment.json\`)
+  - [ ] Authentication: **Managed Identity / Entra ID** (namespace FQDN from \`deployment-outputs-$Environment.json\`)
   - [ ] Consumer group: \`fabric-eventstream\`
   - [ ] Data format: JSON
 - [ ] Publish Eventstream
@@ -210,9 +229,10 @@ $checklistContent = @"
 
 ## 🔧 Phase 3: Voice Agent Configuration — PENDING
 
-- [ ] Get connection string from \`deployment-outputs-$Environment.json\`
-- [ ] Implement Event Hub sender in agent code
-  - [ ] Install SDK: \`@azure/event-hubs\` (Node.js) or \`azure-eventhub\` (Python)
+- [ ] Assign the agent's Managed Identity the **Azure Event Hubs Data Sender** role on the Event Hub
+- [ ] Implement Event Hub sender in agent code (keyless — no connection string)
+  - [ ] Install SDK: \`@azure/event-hubs\` + \`@azure/identity\` (Node.js) or \`azure-eventhub\` + \`azure-identity\` (Python)
+  - [ ] Authenticate with \`DefaultAzureCredential\` against the namespace FQDN
   - [ ] Follow message format: \`docs/event-hub-message-format.md\`
 - [ ] Implement message types:
   - [ ] \`conversation_started\`
@@ -302,12 +322,12 @@ Copy measures from \`docs/powerbi-configuration.md\` → Section "Parte 3":
 
 ## 🔒 Phase 6: Security & Compliance
 
-- [ ] Verify PII masking in userUtterance field
+- [ ] Verify PII masking in ``userUtterance`` field
 - [ ] Apply RLS in Power BI (if needed)
 - [ ] Review data retention policies (Event Hub, Eventhouse)
 - [ ] Configure Private Endpoints (production only)
-- [ ] Disable SAS authentication (production only)
-- [ ] Enable Managed Identity (production only)
+- [x] SAS/local authentication disabled (keyless by default — enforced in IaC)
+- [x] Managed Identity + RBAC data roles (keyless by default — enforced in IaC)
 
 ---
 
@@ -368,7 +388,7 @@ if (-not $WhatIf) {
     Write-Host "  5. Build Power BI dashboards (docs/powerbi-configuration.md)" -ForegroundColor White
     Write-Host ""
     Write-Host "📁 Key Outputs:" -ForegroundColor $ColorInfo
-    Write-Host "  - Connection strings: bicep/deployment-outputs-$Environment.json" -ForegroundColor Gray
+    Write-Host "  - Deployment outputs (FQDN, roles): bicep/deployment-outputs-$Environment.json" -ForegroundColor Gray
     Write-Host "  - Checklist: $checklistPath" -ForegroundColor Gray
     Write-Host ""
 } else {
